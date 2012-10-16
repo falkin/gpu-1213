@@ -17,7 +17,13 @@ extern void helloOMP1(void);
 extern void helloOMP2(void);
 
 extern double ComputePI1 ( unsigned long long intervals, int threads = 0 );
-
+extern double ComputePI2 ( unsigned long long intervals, int threads = 0 );
+extern double ComputePI3 ( unsigned long long intervals, int threads = 0 );
+extern double ComputePI4 ( unsigned long long intervals, int threads = 0 );
+extern double ComputePI5 ( unsigned long long intervals, int threads = 0 );
+extern double ComputePI6 ( unsigned long long intervals, int threads = 0 );
+extern double ComputePI7 ( unsigned long long intervals, int threads = 0 );
+extern double ComputePI8 ( unsigned long long intervals, int threads = 0 );
 
 /*--------------------------------------*\
  |*     Public          *|
@@ -46,7 +52,7 @@ int mainCore(void) {
     Chronos chrono;
     chrono.start();
 
-    isOk &= useHello();
+    //isOk &= useHello();
 
     isOk &= usePI();
 
@@ -68,7 +74,14 @@ bool useHello(void) {
 }
 
 bool usePI ( void ) {
-    ComputePI1 ();
+    ComputePI1 ( 1000000000 );
+    ComputePI2 ( 1000000000 );
+    ComputePI3 ( 1000000000 );
+    ComputePI4 ( 1000000000 );
+    ComputePI5 ( 1000000000 );
+    ComputePI6 ( 1000000000 );
+    ComputePI7 ( 1000000000 );
+    ComputePI8 ( 1000000000 );
     return true;
 }
 /*----------------------------------------------------------------------*\

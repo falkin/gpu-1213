@@ -36,7 +36,7 @@ int main(void)
     {
     rappelTypeSize();
 
-    bool isTest=true;
+    bool isTest=false;
     return  isTest?mainTest():mainCore();
     }
 
