@@ -1,0 +1,25 @@
+14:47:59 **** Build of configuration CudaWin for project Cula ****
+make -f cudaWin.mk all 
+
+==================================================================================
+[CBI]->Target Name	: TutoCula64
+[CBI]->Type	 		: EXE
+[CBI]->Arch	 		: 64
+[CBI]->OS	 		: Win
+[CBI]->User	 		: bilat
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/windows ../BilatToolsCPP/src/core ../BilatToolsCuda/src/core
+[CBI]->Location 	: target/bin/TutoCula64.exe
+[CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
+[CBI]->Compilateur 	: VISUAL && nvcc
+[CBI]->Task			: Start Compiling-Linking !
+[CBI]->Time			: 14:48:00
+==================================================================================
+
+versionCheck.cpp
+benchmark.cpp
+src/cpp/core/01_CuLa/benchmark.cpp(68) : fatal error C1083: Cannot open include file: 'mkl_lapack.h': No such file or directory
+../PRODUCTION/MANAGER/makefile/private/makeFileCudaWin.mk:226: recipe for target `target/obj/benchmark.obj' failed
+make: *** [target/obj/benchmark.obj] Error 2
+
+14:48:14 Build Finished (took 14s.445ms)
+

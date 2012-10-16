@@ -1,0 +1,20 @@
+17:28:51 **** Clean-only build of configuration GCC for project OpenMP ****
+make -f gcc.mk clean 
+
+==================================================================================
+[CBI]->Target Name	: TutoOMP64
+[CBI]->Type	 		: EXE
+[CBI]->Arch	 		: 64
+[CBI]->OS	 		: Linux
+[CBI]->User	 		: studentmse9
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/linux ../BilatToolsCPP/src/core ../BilatToolsOpenMP/src/core
+[CBI]->Location 	: /tmp/ramdrive/studentmse9/Targets/TutoOMP/bin/TutoOMP64.run
+[CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
+[CBI]->Compilateur 	: g++ [CXX=g++]
+[CBI]->Task			: Cleaning folder : /tmp/ramdrive/studentmse9/Targets/TutoOMP/obj /tmp/ramdrive/studentmse9/Targets/TutoOMP/bin
+[CBI]->Time			: 17:28:51
+==================================================================================
+
+
+17:28:51 Build Finished (took 107ms)
+

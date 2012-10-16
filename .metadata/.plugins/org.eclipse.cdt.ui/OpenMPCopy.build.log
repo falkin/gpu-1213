@@ -1,0 +1,26 @@
+13:35:46 **** Incremental Build of configuration GCC for project OpenMPCopy ****
+make -f gcc.mk all 
+
+==================================================================================
+[CBI]->Target Name	: TutoOMP64
+[CBI]->Type	 		: EXE
+[CBI]->Arch	 		: 64
+[CBI]->OS	 		: Linux
+[CBI]->User	 		: joaquim
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/linux ../BilatToolsCPP/src/core ../BilatToolsOpenMP/src/core
+[CBI]->Location 	: target/bin/TutoOMP64.run
+[CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
+[CBI]->Compilateur 	: g++ [CXX=g++]
+[CBI]->Task			: Start Compiling-Linking !
+[CBI]->Time			: 13:35:46
+==================================================================================
+
+[CBI]->compiling .cpp : src/cpp/core/mainCore.cpp
+src/cpp/core/mainCore.cpp: In function ‘int mainCore()’:
+src/cpp/core/mainCore.cpp:44:5: error: ‘Chronos’ was not declared in this scope
+src/cpp/core/mainCore.cpp:44:13: error: expected ‘;’ before ‘chrono’
+src/cpp/core/mainCore.cpp:45:5: error: ‘chrono’ was not declared in this scope
+make: *** [target/obj/mainCore.o] Error 1
+
+13:35:46 Build Finished (took 209ms)
+

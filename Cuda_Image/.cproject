@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="0.137226647">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.137226647" moduleId="org.eclipse.cdt.core.settings" name="CudaWin">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.VCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.ui.CudaCBI parser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildProperties="" description="" errorParsers="org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.ui.CudaCBI parser" id="0.137226647" name="CudaWin" parent="org.eclipse.cdt.build.core.prefbase.cfg">
+					<folderInfo id="0.137226647." name="/" resourcePath="">
+						<toolChain errorParsers="" id="cdt.managedbuild.toolchain.gnu.mingw.base.828711132" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.base">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.PE" id="cdt.managedbuild.target.gnu.platform.mingw.base.537428453" name="Debug Platform" osList="win32" superClass="cdt.managedbuild.target.gnu.platform.mingw.base"/>
+							<builder arguments="-f cudaWin.mk" command="make" errorParsers="" id="cdt.managedbuild.builder.gnu.cross.1575119017" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder"/>
+							<tool errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.assembler.mingw.base.2083392534" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.base">
+								<option id="gnu.both.asm.option.include.paths.1841461101" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/mkl/include"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/tbb/include"/>
+									<listOptionValue builtIn="false" value="../"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/CL"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/crt"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/thrust"/>
+									<listOptionValue builtIn="false" value="/usr/local/cula/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include/linux"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/cppTest}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCuda/src/core/cudatools/header}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCPP/src/core/tools/header}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.391322093" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.236906642" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base"/>
+							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.777642722" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base">
+								<option id="gnu.cpp.compiler.option.include.paths.1783527131" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/mkl/include"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/tbb/include"/>
+									<listOptionValue builtIn="false" value="../"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/CL"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/crt"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/thrust"/>
+									<listOptionValue builtIn="false" value="/usr/local/cula/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include/linux"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/cppTest}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCuda/src/core/cudatools/header}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCPP/src/core/tools/header}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1232859045" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.2032236205" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.base">
+								<option id="gnu.c.compiler.option.include.paths.1374574276" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/mkl/include"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/tbb/include"/>
+									<listOptionValue builtIn="false" value="../"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/CL"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/crt"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/thrust"/>
+									<listOptionValue builtIn="false" value="/usr/local/cula/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include/linux"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/cppTest}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCuda/src/core/cudatools/header}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCPP/src/core/tools/header}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.2057183817" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.base.1308926587" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.base"/>
+							<tool errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.base.934580304" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.base">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1553725479" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+		<cconfiguration id="0.137226647.2118682282">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.137226647.2118682282" moduleId="org.eclipse.cdt.core.settings" name="CudaLinux">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.ui.CudaCBI parser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildProperties="" description="" errorParsers="org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.ui.CudaCBI parser" id="0.137226647.2118682282" name="CudaLinux" parent="org.eclipse.cdt.build.core.prefbase.cfg">
+					<folderInfo id="0.137226647.2118682282." name="/" resourcePath="">
+						<toolChain errorParsers="" id="cdt.managedbuild.toolchain.gnu.mingw.base.2089656725" name="MinGW GCC" superClass="cdt.managedbuild.toolchain.gnu.mingw.base">
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.PE" id="cdt.managedbuild.target.gnu.platform.mingw.base.1664527648" name="Debug Platform" osList="win32" superClass="cdt.managedbuild.target.gnu.platform.mingw.base"/>
+							<builder arguments="-f cudaLinux.mk" command="make" errorParsers="" id="cdt.managedbuild.builder.gnu.cross.1752775544" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder"/>
+							<tool errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.assembler.mingw.base.2027102150" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.base">
+								<option id="gnu.both.asm.option.include.paths.535356258" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/mkl/include"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/tbb/include"/>
+									<listOptionValue builtIn="false" value="../"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/CL"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/crt"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/thrust"/>
+									<listOptionValue builtIn="false" value="/usr/local/cula/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include/linux"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/cppTest}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCuda/src/core/cudatools/header}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCPP/src/core/tools/header}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1280535637" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.archiver.mingw.base.189862251" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.mingw.base"/>
+							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.1789150245" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base">
+								<option id="gnu.cpp.compiler.option.include.paths.1303427236" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/mkl/include"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/tbb/include"/>
+									<listOptionValue builtIn="false" value="../"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/CL"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/crt"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/thrust"/>
+									<listOptionValue builtIn="false" value="/usr/local/cula/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include/linux"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/cppTest}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCuda/src/core/cudatools/header}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCPP/src/core/tools/header}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1896139111" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool errorParsers="org.eclipse.cdt.core.GCCErrorParser" id="cdt.managedbuild.tool.gnu.c.compiler.mingw.base.165840049" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.mingw.base">
+								<option id="gnu.c.compiler.option.include.paths.1063222871" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/mkl/include"/>
+									<listOptionValue builtIn="false" value="/opt/intel/composer_xe_2011_sp1.8.273/tbb/include"/>
+									<listOptionValue builtIn="false" value="../"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/CL"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/crt"/>
+									<listOptionValue builtIn="false" value="/usr/local/cuda/include/thrust"/>
+									<listOptionValue builtIn="false" value="/usr/local/cula/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include"/>
+									<listOptionValue builtIn="false" value="/usr/lib/jvm/java-6-sun-1.6.0.26/include/linux"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatTools}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/cppTest}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/include/bilatGLImages/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/PRODUCTION/commonExt/cuda/include/bilatGLImageCuda/extras}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCuda/src/core/cudatools/header}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/BilatToolsCPP/src/core/tools/header}&quot;"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.322192508" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.base.29049821" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.base"/>
+							<tool errorParsers="org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.base.63195016" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.base">
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1687808704" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<sourceEntries>
+						<entry excluding="src" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+					</sourceEntries>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="MyProject.null.1605249436" name="MyProject"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Default">
+			<resource resourceType="PROJECT" workspacePath="/MyProject"/>
+		</configuration>
+		<configuration configurationName="CudaLinux">
+			<resource resourceType="PROJECT" workspacePath="/Cuda_Image"/>
+		</configuration>
+		<configuration configurationName="visual"/>
+		<configuration configurationName="IntelWin"/>
+		<configuration configurationName="IntelLinux"/>
+		<configuration configurationName="CudaWin"/>
+		<configuration configurationName="MinGW"/>
+		<configuration configurationName="GCC">
+			<resource resourceType="PROJECT" workspacePath="/MyProject"/>
+		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="0.137226647.1196207774;0.137226647.1196207774.;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.150126895;cdt.managedbuild.tool.gnu.cpp.compiler.input.1238103674">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.137226647">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.137226647.2118682282;0.137226647.2118682282.;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.1789150245;cdt.managedbuild.tool.gnu.cpp.compiler.input.1896139111">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.137226647.2118682282;0.137226647.2118682282.;cdt.managedbuild.tool.gnu.c.compiler.mingw.base.165840049;cdt.managedbuild.tool.gnu.c.compiler.input.322192508">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.137226647.1196207774;0.137226647.1196207774.;cdt.managedbuild.tool.gnu.c.compiler.mingw.base.418942919;cdt.managedbuild.tool.gnu.c.compiler.input.1796324835">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.137226647;0.137226647.;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.base.777642722;cdt.managedbuild.tool.gnu.cpp.compiler.input.1232859045">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.137226647;0.137226647.;cdt.managedbuild.tool.gnu.c.compiler.mingw.base.2032236205;cdt.managedbuild.tool.gnu.c.compiler.input.2057183817">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+</cproject>

@@ -1,0 +1,20 @@
+17:28:51 **** Clean-only build of configuration CudaWin for project BilatToolsCuda ****
+make -f cudaWin.mk clean 
+
+==================================================================================
+[CBI]->Target Name	: BilatToolsCuda
+[CBI]->Type	 		: EXE
+[CBI]->Arch	 		: 
+[CBI]->OS	 		: Win
+[CBI]->User	 		: 
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/windows ../BilatToolsCPP/src/core
+[CBI]->Location 	: target/bin/BilatToolsCuda.exe
+[CBI]->Deploy 		: 
+[CBI]->Compilateur 	: VISUAL && nvcc
+[CBI]->Task			: Cleaning folder : target/obj target/bin target/cubin
+[CBI]->Time			: 17:28:51
+==================================================================================
+
+
+17:28:51 Build Finished (took 57ms)
+

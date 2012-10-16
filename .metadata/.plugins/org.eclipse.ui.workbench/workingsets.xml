@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.cdt.ui.CElementWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1295959672060_1" label="OpenMP" name="OpenMP">
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/OpenMP" type="4"/>
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/OpenMP_Image" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.cdt.ui.CElementWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1295959721771_4" label="Cuda" name="Cuda">
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/Cuda_Image" type="4"/>
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/Cuda" type="4"/>
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/Cuda_OpenVC" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.cdt.ui.CElementWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1330878838719_6" label="cppTest" name="cppTest">
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/cppTestAPI" type="4"/>
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/cppTestTuto" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.cdt.ui.CElementWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1330878853610_7" label="Tools" name="Tools">
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/BilatToolsCPP" type="4"/>
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/BilatToolsCuda" type="4"/>
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/BilatToolsOpenMP" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346431186914_27" label="Resources" name="Resources">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/PRODUCTION" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1295959088341_0" label="Window Working Set" name="Aggregate for window 1295959088341"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1330805859499_5" label="Multiple Working Sets" name="Aggregate:Hellos:Work:">
+<workingSet IMemento.internal.id="OpenMP"/>
+<workingSet IMemento.internal.id="Cuda"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1330878854766_8" label="Multiple Working Sets" name="Aggregate:cppTest:Cuda:OpenMP:">
+<workingSet IMemento.internal.id="cppTest"/>
+<workingSet IMemento.internal.id="Cuda"/>
+<workingSet IMemento.internal.id="OpenMP"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1336313200796_12" label="Multiple Working Sets" name="Aggregate:common:cppTest:Cuda:OpenMP:">
+<workingSet IMemento.internal.id="Tools"/>
+<workingSet IMemento.internal.id="cppTest"/>
+<workingSet IMemento.internal.id="Cuda"/>
+<workingSet IMemento.internal.id="OpenMP"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342618894656_8" label="Window Working Set" name="Aggregate for window 1342618894656"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342622637688_9" label="Window Working Set" name="Aggregate for window 1342622637688"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342624228406_10" label="Window Working Set" name="Aggregate for window 1342624228406"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342625818161_11" label="Window Working Set" name="Aggregate for window 1342625818161"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342626101677_12" label="Window Working Set" name="Aggregate for window 1342626101677"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342627186204_13" label="Window Working Set" name="Aggregate for window 1342627186204"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342772674373_14" label="Window Working Set" name="Aggregate for window 1342772674373"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342818701798_15" label="Window Working Set" name="Aggregate for window 1342818701798"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342819558804_16" label="Window Working Set" name="Aggregate for window 1342819558804"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342819755083_17" label="Window Working Set" name="Aggregate for window 1342819755083"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342819919131_18" label="Window Working Set" name="Aggregate for window 1342819919131"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1342821151304_19" label="Window Working Set" name="Aggregate for window 1342821151304"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346170732477_20" label="Window Working Set" name="Aggregate for window 1346170732477"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346175744146_21" label="Window Working Set" name="Aggregate for window 1346175744146"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346412323657_22" label="Window Working Set" name="Aggregate for window 1346412323657"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346412338992_24" label="Multiple Working Sets" name="Aggregate:cppTest:Cuda:OpenMP:Tools:">
+<workingSet IMemento.internal.id="cppTest"/>
+<workingSet IMemento.internal.id="Cuda"/>
+<workingSet IMemento.internal.id="OpenMP"/>
+<workingSet IMemento.internal.id="Tools"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346431197600_28" label="Multiple Working Sets" name="Aggregate:cppTest:Cuda:OpenMP:Resources:Tools:">
+<workingSet IMemento.internal.id="cppTest"/>
+<workingSet IMemento.internal.id="Cuda"/>
+<workingSet IMemento.internal.id="OpenMP"/>
+<workingSet IMemento.internal.id="Resources"/>
+<workingSet IMemento.internal.id="Tools"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346432235157_26" label="Window Working Set" name="Aggregate for window 1346432235157"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346432316527_27" label="Window Working Set" name="Aggregate for window 1346432316527"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346433981269_28" label="Window Working Set" name="Aggregate for window 1346433981269"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1346435734332_29" label="Window Working Set" name="Aggregate for window 1346435734332"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347959800589_30" label="Window Working Set" name="Aggregate for window 1347959800589"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347962482650_31" label="Window Working Set" name="Aggregate for window 1347962482650"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347973528320_32" label="Window Working Set" name="Aggregate for window 1347973528320"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347976174845_33" label="Window Working Set" name="Aggregate for window 1347976174845"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347977800015_34" label="Window Working Set" name="Aggregate for window 1347977800015"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347977998046_35" label="Window Working Set" name="Aggregate for window 1347977998046"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347979538374_36" label="Window Working Set" name="Aggregate for window 1347979538374"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347986988165_37" label="Window Working Set" name="Aggregate for window 1347986988165"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347990874344_38" label="Window Working Set" name="Aggregate for window 1347990874344"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347991312903_39" label="Window Working Set" name="Aggregate for window 1347991312903"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1347992175131_40" label="Window Working Set" name="Aggregate for window 1347992175131"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348047753413_41" label="Window Working Set" name="Aggregate for window 1348047753413"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348048231063_45" label="Window Working Set" name="Aggregate for window 1348048231063"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348048801150_42" label="Window Working Set" name="Aggregate for window 1348048801149"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348051152822_43" label="Window Working Set" name="Aggregate for window 1348051152822"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348053563143_44" label="Window Working Set" name="Aggregate for window 1348053563143"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348054226329_46" label="Window Working Set" name="Aggregate for window 1348054226329"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348062304833_47" label="Window Working Set" name="Aggregate for window 1348062304833"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348071621608_48" label="Window Working Set" name="Aggregate for window 1348071621608"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348652622451_49" label="Window Working Set" name="Aggregate for window 1348652622451"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348656124741_50" label="Window Working Set" name="Aggregate for window 1348656124741"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1348670804489_51" label="Window Working Set" name="Aggregate for window 1348670804489"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1349261438212_52" label="Window Working Set" name="Aggregate for window 1349261438212"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1349277131136_53" label="Window Working Set" name="Aggregate for window 1349277131136"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1350425759682_54" label="Window Working Set" name="Aggregate for window 1350425759682"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1350426633674_55" label="Window Working Set" name="Aggregate for window 1350426633674"/>
+<mruList name="Tools"/>
+<mruList name="OpenMP"/>
+</workingSetManager>

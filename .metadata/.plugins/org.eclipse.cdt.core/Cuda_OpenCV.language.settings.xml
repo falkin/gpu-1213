@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project>
+	<configuration id="0.137226647" name="CudaWin">
+		<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">
+			<provider id="org.eclipse.cdt.ui.UserLanguageSettingsProvider">
+				<language id="org.eclipse.cdt.core.g++">
+					<resource project-relative-path="">
+						<entry kind="includePath" name="/BilatToolsCPP/src/core/tools/header">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+						<entry kind="includePath" name="/BilatToolsCuda/src/core/cudatools/header">
+							<flag value="VALUE_WORKSPACE_PATH|RESOLVED"/>
+						</entry>
+					</resource>
+				</language>
+			</provider>
+		</extension>
+	</configuration>
+</project>

@@ -1,0 +1,20 @@
+17:41:37 **** Incremental Build of configuration visual for project OpenMP_Image ****
+Info: Configuration "visual" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
+make -f visual.mk all 
+
+==================================================================================
+[CBI]->Target Name	: TutoOpenMP_Image
+[CBI]->Type	 		: EXE
+[CBI]->Arch	 		: 
+[CBI]->OS	 		: Win
+[CBI]->User	 		: 
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/windows ../BilatToolsCPP/src/core ../BilatToolsOpenMP/src/core
+make: cl: Command not found
+[CBI]->Location 	: /tmp/ramdrive//Targets/TutoOpenMP_Image/bin/TutoOpenMP_Image.exe
+[CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
+[CBI]->Compilateur 	: VISUAL [CXX=cl]
+[CBI]->Task			: Start Compiling-Linking !
+[CBI]->Time			: 17:41:37
+==================================================================================
+make: *** [/tmp/ramdrive//Targets/TutoOpenMP_Image/obj/main.obj] Error 127
+

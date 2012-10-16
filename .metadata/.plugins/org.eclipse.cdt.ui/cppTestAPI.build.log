@@ -1,0 +1,20 @@
+17:28:51 **** Clean-only build of configuration Visual for project cppTestAPI ****
+make -f visual.mk clean 
+
+==================================================================================
+[CBI]->Target Name	: cppTestApi
+[CBI]->Type	 		: STATIC_LIB
+[CBI]->Arch	 		: 
+[CBI]->OS	 		: Win
+[CBI]->User	 		: 
+[CBI]->Src_aux 		: 
+[CBI]->Location 	: target/bin/cppTestApi.lib
+[CBI]->Deploy 		: 
+[CBI]->Compilateur 	: VISUAL [CXX=cl]
+[CBI]->Task			: Cleaning folder : target/obj target/bin
+[CBI]->Time			: 17:28:51
+==================================================================================
+
+
+17:28:52 Build Finished (took 56ms)
+

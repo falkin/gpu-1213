@@ -1,0 +1,56 @@
+12:52:04 **** Incremental Build of configuration CudaLinux for project Cuda_OpenCV ****
+Info: Configuration "CudaLinux" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
+make -f cudaLinux.mk all 
+
+==================================================================================
+[CBI]->Target Name	: TutoCudaOpenCV64
+[CBI]->Type	 		: EXE
+[CBI]->Arch	 		: 64
+[CBI]->OS	 		: Linux
+[CBI]->User	 		: joaquim
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/linux ../BilatToolsCPP/src/core ../BilatToolsCuda/src/core /usr/include/opencv /usr/include/opencv2/highgui /usr/include/opencv2/core /usr/include/opencv2/flann /usr/include/opencv2/imgproc
+[CBI]->Location 	: target/bin/TutoCudaOpenCV64.run
+[CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
+[CBI]->Compilateur 	: gcc && nvcc
+[CBI]->Task			: Start Compiling-Linking !
+[CBI]->Time			: 12:52:04
+==================================================================================
+
+[CBI]->compiling .cpp : src/main.cpp
+[CBI]->compiling .cpp : ../BilatToolsCPP/src/core/tools/cpp/aleaTools.cpp
+[CBI]->compiling .cpp : ../BilatToolsCPP/src/core/tools/cpp/Chronos.cpp
+[CBI]->compiling .cpp : ../BilatToolsCPP/src/core/tools/cpp/histo.cpp
+[CBI]->compiling .cpp : ../BilatToolsCPP/src/core/tools/cpp/mathTools.cpp
+[CBI]->compiling .cpp : ../BilatToolsCPP/src/core/tools/cpp/rawMajorTools.cpp
+[CBI]->compiling .cpp : ../BilatToolsCPP/src/core/tools/cpp/stringTools.cpp
+[CBI]->compiling .cpp : ../BilatToolsCPP/src/core/tools/cpp/tab1DTools.cpp
+[CBI]->compiling .cpp : ../BilatToolsCPP/src/core/tools/cpp/tab2DTools.cpp
+[CBI]->compiling .cpp : ../BilatToolsCPP/src/core/tools/cpp/vectorTools.cpp
+[CBI]->compiling .cpp : ../BilatToolsCuda/src/core/cudatools/cpp/cudaTools.cpp
+[CBI]->compiling .cpp : ../BilatToolsCuda/src/core/cudatools/cpp/Device.cpp
+
+[CBI]->linking to target/bin/TutoCudaOpenCV64.run
+
+==================================================================================
+[CBI]->Target Name	: TutoCudaOpenCV64
+[CBI]->Type	 		: EXE
+[CBI]->Arch	 		: 64
+[CBI]->OS	 		: Linux
+[CBI]->User	 		: joaquim
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/linux ../BilatToolsCPP/src/core ../BilatToolsCuda/src/core /usr/include/opencv /usr/include/opencv2/highgui /usr/include/opencv2/core /usr/include/opencv2/flann /usr/include/opencv2/imgproc
+[CBI]->Location 	: target/bin/TutoCudaOpenCV64.run
+[CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
+[CBI]->Compilateur 	: g++ && nvcc
+[CBI]->Task			: End Compiling-Linking !
+[CBI]->Time			: 12:52:06
+==================================================================================
+
+
+[CBI]->Deploying  : TutoCudaOpenCV64.run
+
+[CBI]->Cleaning : Cuda temp files, excepted .cubin for JCuda
+
+
+
+12:52:06 Build Finished (took 2s.471ms)
+

@@ -1,0 +1,21 @@
+17:28:51 **** Clean-only build of configuration CudaLinux for project Cuda_OpenVC ****
+Info: Configuration "CudaLinux" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
+make -f cudaLinux.mk clean 
+
+==================================================================================
+[CBI]->Target Name	: TutoCudaOpenCV64
+[CBI]->Type	 		: EXE
+[CBI]->Arch	 		: 64
+[CBI]->OS	 		: Linux
+[CBI]->User	 		: studentmse9
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/linux ../BilatToolsCPP/src/core ../BilatToolsCuda/src/core /usr/include/opencv /usr/include/opencv2/highgui /usr/include/opencv2/core /usr/include/opencv2/flann /usr/include/opencv2/imgproc
+[CBI]->Location 	: /tmp/ramdrive/studentmse9/Targets/TutoCudaOpenCV/bin/TutoCudaOpenCV64.run
+[CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
+[CBI]->Compilateur 	: gcc && nvcc
+[CBI]->Task			: Cleaning folder : /tmp/ramdrive/studentmse9/Targets/TutoCudaOpenCV/obj /tmp/ramdrive/studentmse9/Targets/TutoCudaOpenCV/bin /tmp/ramdrive/studentmse9/Targets/TutoCudaOpenCV/cubin
+[CBI]->Time			: 17:28:51
+==================================================================================
+
+
+17:28:51 Build Finished (took 113ms)
+
