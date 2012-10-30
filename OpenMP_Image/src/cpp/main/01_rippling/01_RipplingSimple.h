@@ -1,5 +1,5 @@
-#ifndef 01_RIPPLINGSIMPLE_H_
-#define 01_RIPPLINGSIMPLE_H_
+#ifndef RIPPLINGSIMPLE_H_
+#define RIPPLINGSIMPLE_H_
 
 #include "ImageMOOs.h"
 
@@ -18,13 +18,13 @@ typedef unsigned int Point;
 
 class RipplingSimple : public ImageMOOs {
 public:
-	RipplingSimple( Point m, Point n );
-	virtual ~RipplingSimple();
-	void Ripple( Time time );
-	void animationStep( bool& isNeedUpdateView );
+  RipplingSimple( Point m, Point n, Time dt );
+  virtual ~RipplingSimple() {}
+  void Ripple( Time time );
+  void animationStep( bool& isNeedUpdateView );
 
 private:
-	Color ComputeColor( Point x, Point y, Dim dim, Time time );
+  Color ComputeColor( Point x, Point y, Dim dim, Time time );
 };
 
 #endif 

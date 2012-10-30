@@ -1,4 +1,5 @@
 #include <iostream>
+#include "ImageViewers.h"
 
 using std::cout;
 using std::endl;
@@ -7,8 +8,8 @@ using std::endl;
  |*			Importation 					*|
  \*---------------------------------------------------------------------*/
 
-extern int mainCore(void);
-extern int mainTest(void);
+extern int mainCore ( void );
+extern int mainTest ( void );
 
 /*----------------------------------------------------------------------*\
  |*			Implementation 					*|
@@ -18,15 +19,16 @@ extern int mainTest(void);
  |*		Public			*|
  \*-------------------------------------*/
 
-int main(void);
+int main ( int argc, char * argv[] );
 
 /*--------------------------------------*\
  |*		Private			*|
  \*-------------------------------------*/
 
-int main(void) {
-	bool isTest = false;
-	return isTest ? mainTest() : mainCore();
+int main ( int argc, char * argv[] ) {
+  ImageViewers::init ( argc, argv );
+  bool isTest = false;
+  return isTest ? mainTest () : mainCore ();
 }
 
 /*----------------------------------------------------------------------*\

@@ -1,4 +1,4 @@
-17:28:51 **** Clean-only build of configuration GCC for project OpenMP ****
+19:06:08 **** Clean-only build of configuration GCC for project OpenMP ****
 make -f gcc.mk clean 
 
 ==================================================================================
@@ -12,9 +12,9 @@ make -f gcc.mk clean
 [CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
 [CBI]->Compilateur 	: g++ [CXX=g++]
 [CBI]->Task			: Cleaning folder : /tmp/ramdrive/studentmse9/Targets/TutoOMP/obj /tmp/ramdrive/studentmse9/Targets/TutoOMP/bin
-[CBI]->Time			: 17:28:51
+[CBI]->Time			: 19:06:08
 ==================================================================================
 
 
-17:28:51 Build Finished (took 107ms)
+19:06:08 Build Finished (took 107ms)
 

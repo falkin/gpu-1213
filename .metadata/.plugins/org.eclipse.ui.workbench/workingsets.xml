@@ -95,6 +95,8 @@
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1349277131136_53" label="Window Working Set" name="Aggregate for window 1349277131136"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1350425759682_54" label="Window Working Set" name="Aggregate for window 1350425759682"/>
 <workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1350426633674_55" label="Window Working Set" name="Aggregate for window 1350426633674"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1350469368323_56" label="Window Working Set" name="Aggregate for window 1350469368323"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1350484884471_57" label="Window Working Set" name="Aggregate for window 1350484884471"/>
 <mruList name="Tools"/>
 <mruList name="OpenMP"/>
 </workingSetManager>

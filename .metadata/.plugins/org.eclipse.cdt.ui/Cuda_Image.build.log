@@ -1,4 +1,4 @@
-17:28:51 **** Clean-only build of configuration CudaLinux for project Cuda_Image ****
+19:06:08 **** Clean-only build of configuration CudaLinux for project Cuda_Image ****
 Info: Configuration "CudaLinux" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
 make -f cudaLinux.mk clean 
 
@@ -13,9 +13,9 @@ make -f cudaLinux.mk clean
 [CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
 [CBI]->Compilateur 	: gcc && nvcc
 [CBI]->Task			: Cleaning folder : /tmp/ramdrive/studentmse9/Targets/TutoCuda_Image/obj /tmp/ramdrive/studentmse9/Targets/TutoCuda_Image/bin /tmp/ramdrive/studentmse9/Targets/TutoCuda_Image/cubin
-[CBI]->Time			: 17:28:51
+[CBI]->Time			: 19:06:08
 ==================================================================================
 
 
-17:28:51 Build Finished (took 114ms)
+19:06:08 Build Finished (took 114ms)
 

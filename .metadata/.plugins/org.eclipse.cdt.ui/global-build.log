@@ -1,20 +1,40 @@
-17:41:37 **** Incremental Build of configuration visual for project OpenMP_Image ****
-Info: Configuration "visual" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
-make -f visual.mk all 
+19:15:53 **** Incremental Build of configuration GCC for project OpenMP_Image ****
+Info: Configuration "GCC" uses tool-chain "MinGW GCC" that is unsupported on this system, attempting to build anyway.
+make -f gcc.mk all 
 
 ==================================================================================
-[CBI]->Target Name	: TutoOpenMP_Image
+[CBI]->Target Name	: TutoOpenMP_Image64
 [CBI]->Type	 		: EXE
-[CBI]->Arch	 		: 
-[CBI]->OS	 		: Win
-[CBI]->User	 		: 
-[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/windows ../BilatToolsCPP/src/core ../BilatToolsOpenMP/src/core
-make: cl: Command not found
-[CBI]->Location 	: /tmp/ramdrive//Targets/TutoOpenMP_Image/bin/TutoOpenMP_Image.exe
+[CBI]->Arch	 		: 64
+[CBI]->OS	 		: Linux
+[CBI]->User	 		: studentmse9
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/linux ../BilatToolsCPP/src/core ../BilatToolsOpenMP/src/core
+[CBI]->Location 	: /tmp/ramdrive/studentmse9/Targets/TutoOpenMP_Image/bin/TutoOpenMP_Image64.run
 [CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
-[CBI]->Compilateur 	: VISUAL [CXX=cl]
+[CBI]->Compilateur 	: g++ [CXX=g++]
 [CBI]->Task			: Start Compiling-Linking !
-[CBI]->Time			: 17:41:37
+[CBI]->Time			: 19:15:53
 ==================================================================================
-make: *** [/tmp/ramdrive//Targets/TutoOpenMP_Image/obj/main.obj] Error 127
 
+[CBI]->compiling .cpp : src/cpp/main/02_mandelbrot/02_Mandelbrot.cpp
+
+[CBI]->linking to /tmp/ramdrive/studentmse9/Targets/TutoOpenMP_Image/bin/TutoOpenMP_Image64.run
+
+==================================================================================
+[CBI]->Target Name	: TutoOpenMP_Image64
+[CBI]->Type	 		: EXE
+[CBI]->Arch	 		: 64
+[CBI]->OS	 		: Linux
+[CBI]->User	 		: studentmse9
+[CBI]->Src_aux 		: ../PRODUCTION/commonExt/include ../PRODUCTION/commonExt/linux ../BilatToolsCPP/src/core ../BilatToolsOpenMP/src/core
+[CBI]->Location 	: /tmp/ramdrive/studentmse9/Targets/TutoOpenMP_Image/bin/TutoOpenMP_Image64.run
+[CBI]->Deploy 		: ../PRODUCTION/Deploy/bin
+[CBI]->Compilateur 	: g++ [CXX=g++]
+[CBI]->Task			: End Compiling-Linking !
+[CBI]->Time			: 19:15:53
+==================================================================================
+
+
+[CBI]->Deploying  : ../PRODUCTION/Deploy/bin/TutoOpenMP_Image64.run
+
+[CBI]->/tmp/ramdrive/studentmse9/Targets/TutoOpenMP_Image/bin/TutoOpenMP_Image64.run : End ALL!

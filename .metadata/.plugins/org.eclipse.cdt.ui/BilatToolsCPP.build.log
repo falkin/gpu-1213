@@ -1,4 +1,4 @@
-17:28:51 **** Clean-only build of configuration Visual for project BilatToolsCPP ****
+19:06:08 **** Clean-only build of configuration Visual for project BilatToolsCPP ****
 make -f visual.mk clean 
 
 ==================================================================================
@@ -12,9 +12,9 @@ make -f visual.mk clean
 [CBI]->Deploy 		: 
 [CBI]->Compilateur 	: VISUAL [CXX=cl]
 [CBI]->Task			: Cleaning folder : target/obj target/bin
-[CBI]->Time			: 17:28:51
+[CBI]->Time			: 19:06:08
 ==================================================================================
 
 
-17:28:51 Build Finished (took 56ms)
+19:06:08 Build Finished (took 57ms)
 
