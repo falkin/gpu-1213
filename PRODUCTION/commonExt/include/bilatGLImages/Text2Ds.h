@@ -10,7 +10,7 @@ using std::string;
 class CBI_GLIMAGE Text2Ds : public Primitives_A
     {
     public:
-	Text2Ds(int x,int y,string texte,Fonts font=Fonts::HELVETICA_10);
+	Text2Ds(int x,int y,string texte,Fonts font=Fonts::HELVETICA_10());
 	virtual ~Text2Ds();
 	void accept(PrimitiveVisitors_I &visitor);
 

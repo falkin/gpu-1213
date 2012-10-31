@@ -17,7 +17,7 @@ class CBI_GLIMAGE_CUDA ImageCudaFonctionelMOOs_A: public ImageCudaMOOs_A
 
 	void headOfDomaineHistory(); //First Domaine of History
 
-	DomaineMaths getCurrentDomaine(); //Domaine currently used
+	DomaineMaths getCurrentDomaine() const; //Domaine currently used
 
 	void setCurrentDomaine(DomaineMaths domaineNew);
 
@@ -25,7 +25,7 @@ class CBI_GLIMAGE_CUDA ImageCudaFonctionelMOOs_A: public ImageCudaMOOs_A
 	 * w et h fixe, ne change pas au cours du temps !
 	 */
 	virtual void fillImageGL(uchar4* ptrDevImageGL, int w, int h, const DomaineMaths& domaineNew)=0; //ptrDevImageGL zone memoire commune OpenGL et Cuda
-
+	virtual void print(ostream& stream) const;
     protected:
 	/**
 	 * Call each time the domaine change

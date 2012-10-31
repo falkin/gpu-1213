@@ -16,23 +16,26 @@ class CBI_GLIMAGE Graphic2Ds
     public:
 	Graphic2Ds(int width, int height);
 	virtual ~Graphic2Ds();
-	Primitives_A* popPrimitive();
-	Colorf popColor();
-
 	void reshape(int width, int height);
+
 	void drawPrimitive(Primitives_A* primitive);
+	Primitives_A* popPrimitive();
+
+	Colorf popColor();
 	void setColor(Colorf colorf);
-	void setColor(float red, float green, float blue, float alpha = 0.0f);
+	void setColorRGB(float r01, float g01, float b01, float a01 = 1.0f);
+	void setColorHSB(float h01, float s01, float b01, float a01 = 1.0f);
 
 	void drawLigne(int x1, int y1, int x2,int y2);
 	void drawVerticalLigne(int x, int y, int height);
 	void drawHorizontalLigne(int x, int y, int width);
-	void drawText(int x, int y, string texte, Fonts font = Fonts::BITMAP_15);
-	void drawTitleTop(string texte, Fonts font = Fonts::BITMAP_15);
-	void drawTitleMiddle(string texte, Fonts font = Fonts::BITMAP_15);
-	void drawTitleBottom(string texte, Fonts font = Fonts::BITMAP_15);
+	void drawText(int x, int y, string texte, Fonts font=Fonts::HELVETICA_12());
+	void drawTitleTop(string texte, Fonts font=Fonts::HELVETICA_12());
+	void drawTitleMiddle(string texte, Fonts font=Fonts::HELVETICA_12());
+	void drawTitleBottom(string texte, Fonts font=Fonts::HELVETICA_12());
 	void drawWiredRect2D(int x, int y, int width, int height);
 	void drawRect2D(int x, int y, int width, int height);
+
 	int texteWidth(string texte,Fonts font);
 	int texteHeight(string texte,Fonts font);
 

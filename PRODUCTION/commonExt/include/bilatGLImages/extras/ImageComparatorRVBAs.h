@@ -12,7 +12,7 @@ class CBI_GLIMAGE ImageComparatorRVBAs: public ImageComparator_A
 	/**
 	 * pixelA and pixelB are composed by 4 unsigned char
 	 */
-	virtual float compare(unsigned char* pixelA, unsigned char* pixelB);
+	virtual unsigned int compare(unsigned char* pixelA, unsigned char* pixelB);
 
     };
 

@@ -12,7 +12,7 @@ class CBI_GLIMAGE ImageComparatorHSBs: public ImageComparator_A
 	/**
 	 * pixelA and pixelB are composed by 4 unsigned char
 	 */
-	float compare(unsigned char* pixelA, unsigned char* pixelB);
+	unsigned int compare(unsigned char* pixelA, unsigned char* pixelB);
     };
 
 #endif

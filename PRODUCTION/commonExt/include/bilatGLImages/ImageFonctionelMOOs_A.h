@@ -11,34 +11,44 @@ using std::stack;
  * ImageMOO with a Mathematical Domaine. This domaine can be modified.
  * An history of modification is maintained for undo.
  */
-class CBI_GLIMAGE ImageFonctionelMOOs_A: public ImageMOOs {
-public:
+class CBI_GLIMAGE ImageFonctionelMOOs_A: public ImageMOOs
+    {
+    public:
 
-  ImageFonctionelMOOs_A ( unsigned int m, unsigned int n, DomaineMaths domaine );
+	ImageFonctionelMOOs_A(unsigned int m, unsigned int n, DomaineMaths domaine);
+	ImageFonctionelMOOs_A(unsigned int m, unsigned int n, unsigned char* tabPixel, DomaineMaths domaine);
+	ImageFonctionelMOOs_A(const ImageFonctionelMOOs_A &imageSource);
+	virtual ~ImageFonctionelMOOs_A();
 
-  ImageFonctionelMOOs_A ( unsigned int m, unsigned int n, unsigned char* tabPixel, DomaineMaths domaine );
+	virtual void fillImage(const DomaineMaths& domaineMath)=0;
 
-  ImageFonctionelMOOs_A ( const ImageFonctionelMOOs_A &imageSource );
+	/**
+	 * Call automaticly fillImage with current domaine !
+	 */
+	virtual void animationStepAPI(bool& isNeedUpdateView);
 
-  virtual ~ImageFonctionelMOOs_A ();
+	void restoreFromDomaineHistory(bool isNeedFillImage=false); //Last Domaine push in History
+	void headOfDomaineHistory(bool isNeedFillImage=false); //First Domaine of History
+	DomaineMaths getCurrentDomaine() const; //Domaine currently used
+	void setCurrentDomaine(DomaineMaths domaineNew,bool isNeedFillImage=false);
 
-  void restoreFromDomaineHistory (); //Last Domaine push in History
+	virtual void print(ostream& stream) const;
 
-  void headOfDomaineHistory (); //First Domaine of History
+	void toXY(int i,int j,float& x,float& y);
 
-  DomaineMaths getCurrentDomaine (); //Domaine currently used
+    protected:
+	/**
+	 * New mathematical domaine for this image.
+	 * Previous domaine will be put in history and current domaine is domaineNew
+	 */
+	virtual void onDomaineChangePerformed(const DomaineMaths& domaineNew);
+    private:
+	void computeDxDy();
 
-  void setCurrentDomaine ( DomaineMaths domaineNew );
-protected:
-  virtual void fillImage ( const DomaineMaths& domaineMath )=0;
-  /**
-   * New mathematical domaine for this image.
-   * Previous domaine will be put in history and current domaine is domaineNew
-   */
-  virtual void onDomaineChangePerformed ( const DomaineMaths& domaineNew );
-private:
+	stack<DomaineMaths> stackHistoryDomaine;
+	float dx;
+	float dy;
 
-  stack<DomaineMaths> stackHistoryDomaine;
-};
+    };
 
 #endif

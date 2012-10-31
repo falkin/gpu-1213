@@ -37,7 +37,7 @@ class CBI_TOOLS Chronos
 	 |*		Friend			*|
 	 \*-------------------------------------*/
 
-	friend ostream& operator <<(ostream& stream, const Chronos& chrono);
+	CBI_TOOLS friend ostream& operator <<(ostream& stream, const Chronos& chrono);
 
     private:
 
@@ -56,5 +56,7 @@ class CBI_TOOLS Chronos
 	double deltaTime;
 	bool isRunning;
     };
+
+
 
 #endif

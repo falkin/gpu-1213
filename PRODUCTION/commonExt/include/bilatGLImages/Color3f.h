@@ -1,6 +1,7 @@
 #ifndef COLOR_3F_H
 #define COLOR_3F_H
 #include "envGLImage.h"
+class Colorf;
 class CBI_GLIMAGE Colorf
     {
     public:
@@ -51,6 +52,8 @@ class CBI_GLIMAGE Colorf
 	    {
 	    return tabColor;
 	    }
+
+	static Colorf toHSB(float h01,float s01,float b01,float a01=1.0f);
 
     private:
 

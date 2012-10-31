@@ -1,15 +1,24 @@
-#ifndef COMPARAISONRESULTS_H
-#define COMPARAISONRESULTS_H
+#ifndef IMAGE_COMPARAISON_RESULTS_H
+#define IMAGE_COMPARAISON_RESULTS_H
 
 #include "envGLImage.h"
 
-#include "StateEgalite.h"
-
-class CBI_GLIMAGE  ImageComparaisonResults
+class CBI_GLIMAGE ImageComparaisonResults
     {
     public:
-	StateEgalite comparaisonAbsolue;
-	StateEgalite comparaisonAbsolueEpsilon;
+	ImageComparaisonResults()
+	    {
+	    isEgal = true;
+	    nbErreur = 0;
+	    deltaMax = 0;
+	    deltaMin = 0;
+	    }
+	;
+
+	bool isEgal;
+	unsigned int deltaMax;
+	unsigned int deltaMin;
+	int nbErreur;
 
     };
 

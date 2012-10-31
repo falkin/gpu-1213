@@ -2,8 +2,7 @@
 #define FONTS_H
 
 #include "envGLTools.h"
-
-
+#include "GLConfig.h"
 #include <string>
 using std::string;
 
@@ -35,16 +34,24 @@ class CBI_GLTOOLS Fonts
 	int getHeight() const;
 	void* getGlutFont() const;
 
-	static Fonts BITMAP_13;
-	static Fonts BITMAP_15;
-	static Fonts TIMES_ROMAN_10;
-	static Fonts TIMES_ROMAN_24;
-	static Fonts HELVETICA_10;
-	static Fonts HELVETICA_12;
-	static Fonts HELVETICA_18;
+	static  Fonts BITMAP_13();
+	static  Fonts BITMAP_15();
+	static  Fonts TIMES_ROMAN_10();
+	static  Fonts TIMES_ROMAN_24();
+	static  Fonts HELVETICA_10();
+	static  Fonts HELVETICA_12();
+	static  Fonts HELVETICA_18();
 
     private:
 	void* glutFont;
+
+	static const Fonts FONT_BITMAP_13;
+	static const Fonts FONT_BITMAP_15;
+	static const Fonts FONT_TIMES_ROMAN_10;
+	static const Fonts FONT_TIMES_ROMAN_24;
+	static const Fonts FONT_HELVETICA_10;
+	static const Fonts FONT_HELVETICA_12;
+	static const Fonts FONT_HELVETICA_18;
     };
 
 #endif

@@ -16,8 +16,8 @@ void Mandelbrot::fillImage ( const DomaineMaths& domaine ) {
 }
 
 void Mandelbrot::setPixel ( const Point i, const Point j, const DomaineMaths& domaine ) {
-  double distX = domaine.x0 + domaine.dx;
-  double distY = domaine.y0 + domaine.dy;
+  double distX = domaine.x0 + domaine.dx();
+  double distY = domaine.y0 + domaine.dy();
   double posX = distX / ( getW () * 1. );
   double posY = distY / ( getH () * 1. );
   double x = 0.;

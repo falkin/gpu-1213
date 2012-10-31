@@ -13,7 +13,7 @@ class CBI_GLIMAGE ImageComparator_A
 	/**
 	 * pixelA and pixelB are composed by 4 unsigned char
 	 */
-	virtual float compare(unsigned char* pixelA, unsigned char* pixelB)=0;
+	virtual unsigned int compare(unsigned char* pixelA, unsigned char* pixelB)=0;
 
 	virtual ImageComparaisonResults run(unsigned int epsilon);
 

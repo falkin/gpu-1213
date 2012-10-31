@@ -72,7 +72,7 @@ bool useMandelbrot ( void ) {
   float dy = 2.6;
   Mandelbrot mandel ( 512, 512, DomaineMaths ( x0, y0, dx, dy ) );
   ImageViewers viewer ( &mandel );
-  viewer.run ();
+  ImageViewers::runALL ();
   return true;
 }
 

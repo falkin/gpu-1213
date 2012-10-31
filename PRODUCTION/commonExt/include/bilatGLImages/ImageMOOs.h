@@ -9,6 +9,7 @@
 
 #include "envGLImage.h"
 #include "ImageMOOs_A.h"
+#include "ColorTools.h"
 
 /**
  * ImageMOOs consists of an array of pixels, (unsigned char* tabPixel).
