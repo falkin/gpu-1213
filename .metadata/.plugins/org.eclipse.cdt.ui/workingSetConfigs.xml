@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<org.eclipse.cdt.ui.workingSetConfigurations>
-<workingSet name="Cuda"/>
-<workingSet name="Tools"/>
-<workingSet name="OpenMP"/>
-<workingSet name="cppTest"/>
-<workingSet name="Resources"/>
-</org.eclipse.cdt.ui.workingSetConfigurations>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;cppTestAPI/src/extension/cpptest+.h&apos; to &apos;cppTest+.h&apos;" description="Rename resource &apos;cpptest+.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/extension/cpptest+.h" name="cppTest+.h" stamp="1328800290028" updateReferences="true"/>
-</session>

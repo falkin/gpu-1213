@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;Cuda_Image/src/file.cpp&apos; to &apos;main.cpp&apos;" description="Rename resource &apos;file.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/file.cpp" name="main.cpp" stamp="1348052811175" updateReferences="true"/>
-</session>
