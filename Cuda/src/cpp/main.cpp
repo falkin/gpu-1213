@@ -49,9 +49,9 @@ int main(void)
 	Device::loadCudaDriver(0); // Force only drive for device 1 to be loaded
 
 	int nbDevice = Device::getDeviceCount();
-	Device::printALL("All device available : ");
+	//Device::printALL("All device available : ");
 
-	bool isTest = true;
+	bool isTest = false;
 	bool isAll = false;
 
 	if (isAll)

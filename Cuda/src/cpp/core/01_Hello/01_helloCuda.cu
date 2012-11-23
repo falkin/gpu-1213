@@ -3,6 +3,7 @@
 #include <iostream>
 #include "cudaTools.h"
 #include "Device.h"
+#include <stdio.h>
 
 using std::cout;
 using std::endl;
@@ -46,21 +47,21 @@ void helloCuda(void)
     //
     //			(Niveau 1) 	D'une grille 2D de blocks.
     //					La dimension de cette grille G est [gridDim.x, gridDim.y]
-    //					La dimemsion max dépend du GPU . Example : [65535,65535,1]
-    //					Un block est localisé par 2 index : (blockIdx.x,blockIdx.y)
-    //					Cette grille possède une mémoire
+    //					La dimemsion max dï¿½pend du GPU . Example : [65535,65535,1]
+    //					Un block est localisï¿½ par 2 index : (blockIdx.x,blockIdx.y)
+    //					Cette grille possï¿½de une mï¿½moire
     //						global
     //						constant
     //
-    //			(Niveau 2) 	Chaque block est constitué d'une matrice3D de threads
+    //			(Niveau 2) 	Chaque block est constituï¿½ d'une matrice3D de threads
     //					La dimension de ce block est [blockDim.x, blockDim.y, blockDim.z]
-    //					La dimemsion max dépend du GPU . Example : [1024,1024,64]
-    //					Un thread est localisé par 3 index : (threadIdx.x,threadIdx.y,threadIdx.y)
-    //					Un block posséde une mémoire
+    //					La dimemsion max dï¿½pend du GPU . Example : [1024,1024,64]
+    //					Un thread est localisï¿½ par 3 index : (threadIdx.x,threadIdx.y,threadIdx.y)
+    //					Un block possï¿½de une mï¿½moire
     //						shared (petite, rapide, accessible only by thread of block)
     //
     //			(Niveau 3)	Un thread est atomique, ie non decomposable
-    //					Un thread possède une mémoire
+    //					Un thread possï¿½de une mï¿½moire
     //						local
     // Terminologie:
     //
@@ -70,8 +71,8 @@ void helloCuda(void)
 
     //
     // Type:
-    // 		Dim3 est une structure à 3 champs : (x,y,z)
-    // 		Dim3 est utilisé pour représenter ¨
+    // 		Dim3 est une structure ï¿½ 3 champs : (x,y,z)
+    // 		Dim3 est utilisï¿½ pour reprï¿½senter ï¿½
     //			(1) Des index
     //				blockId	(avec z=1 toujours)
     //				threadId
@@ -90,7 +91,10 @@ void helloCuda(void)
 
     // 1 block de 1 Thread sur le GPU
 kernelHello<<<blockPerGrid,threadPerBlock>>>(); // 1 block de 1 Thread sur le GPU
-    // addScalar<<<1,1>>>(a,b,ptrDev_c); // syntaxe simplifié
+    // addScalar<<<1,1>>>(a,b,ptrDev_c); // syntaxe simplifiï¿½
+HANDLE_ERROR(cudaDeviceSynchronize());
+check_CUDA_Error("kernelReduction");
+
     }
 
 /*--------------------------------------*\
@@ -100,6 +104,7 @@ kernelHello<<<blockPerGrid,threadPerBlock>>>(); // 1 block de 1 Thread sur le GP
 
 __global__ void kernelHello(void)
     {
+    printf("blublublu\n");
     doSomethingHello();
     }
 

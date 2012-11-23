@@ -16,6 +16,7 @@ using std::endl;
  \*-------------------------------------*/
 
 extern void helloCuda(void);
+extern void reductionCuda(void);
 
 /*--------------------------------------*\
  |*		Public			*|
@@ -28,6 +29,7 @@ int mainCore(int deviceId);
  \*-------------------------------------*/
 
 static bool useHello(void);
+static bool useReduction(void);
 
 /*----------------------------------------------------------------------*\
  |*			Implementation 					*|
@@ -39,10 +41,11 @@ static bool useHello(void);
 
 int mainCore(int deviceId)
     {
-    Device::print(deviceId, "Execute on device : ");
+    //Device::print(deviceId, "Execute on device : ");
 
     bool isOk = true;
-    isOk &= useHello();
+    //isOk &= useHello();
+    isOk &= useReduction();
 
     cout << "\nisOK = " << isOk << endl;
     cout << "\nEnd : mainCore" << endl;
@@ -57,6 +60,12 @@ int mainCore(int deviceId)
 bool useHello(void)
     {
     helloCuda();
+    return true;
+    }
+
+bool useReduction(void)
+    {
+    reductionCuda();
     return true;
     }
 
