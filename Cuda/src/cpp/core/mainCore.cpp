@@ -17,6 +17,7 @@ using std::endl;
 
 extern void helloCuda(void);
 extern void reductionCuda(void);
+extern void pimcCuda(void);
 
 /*--------------------------------------*\
  |*		Public			*|
@@ -30,6 +31,7 @@ int mainCore(int deviceId);
 
 static bool useHello(void);
 static bool useReduction(void);
+static bool usePIMonteCarlo(void);
 
 /*----------------------------------------------------------------------*\
  |*			Implementation 					*|
@@ -45,7 +47,8 @@ int mainCore(int deviceId)
 
     bool isOk = true;
     //isOk &= useHello();
-    isOk &= useReduction();
+    //isOk &= useReduction();
+    isOk &= usePIMonteCarlo();
 
     cout << "\nisOK = " << isOk << endl;
     cout << "\nEnd : mainCore" << endl;
@@ -66,6 +69,12 @@ bool useHello(void)
 bool useReduction(void)
     {
     reductionCuda();
+    return true;
+    }
+
+bool usePIMonteCarlo(void)
+    {
+    pimcCuda();
     return true;
     }
 
