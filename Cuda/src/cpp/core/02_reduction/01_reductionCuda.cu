@@ -89,9 +89,10 @@ void reductionCuda(void)
 __global__ void kernelReduction(float* ptrDevTab, int n)
     {
     int tid = Indice2D::tid();
+    int tidLocal = Indice2D::tidLocalBlock();
+
     __shared__ float tabSM[10];
-    for (int i = 0; i < n; i++)
-	tabSM[i] = 0;
+    tabSM[tidLocal] = 0;
 
     copyGMtoSM(tabSM, ptrDevTab, n);
     int half = n / 2;
