@@ -63,48 +63,60 @@ void pimcCuda(void)
     print(blockPerGrid, threadPerBlock);
     Device::assertDim(blockPerGrid, threadPerBlock);
 
-    int deviceId = 0;
+    int nbDevice = 6;//Device::getDeviceCount();
+    //Device::loadCudaDriverDeviceAll();
+    for (int i = 0; i < nbDevice; i++)
+	Device::loadCudaDriver(i);
 
-    HANDLE_ERROR(cudaGetDevice(&deviceId));
+#pragma omp parallel for //reduction(+:count) private(x,y,z)
+    for (int i = 0; i < nbDevice; i++)
+	{
+	HANDLE_ERROR(cudaSetDevice(i));
+	int deviceId = 0;
+	HANDLE_ERROR(cudaGetDevice(&deviceId));
+	printf("%d\n",deviceId);
 
-    int nglobal = pow(2,40);
-    int nperThread = nglobal / NB_THREAD;
+	double nglobal = pow(2, 30);
+	int nperThread = nglobal / NB_THREAD;
+	//printf("%d\n", nperThread);
 
-    int* ptrHostTab = new int[NB_BLOCK];
-    for (int i = 0; i < NB_BLOCK; i++)
-	ptrHostTab[i] = 0;
+	int* ptrHostTab = new int[NB_BLOCK];
+	for (int i = 0; i < NB_BLOCK; i++)
+	    ptrHostTab[i] = 0;
 
-    int* ptrDevTab = NULL;
-    curandState* ptrDevtabGeneratorThread = NULL;
+	int* ptrDevTab = NULL;
+	curandState* ptrDevtabGeneratorThread = NULL;
 
-    size_t tabsize = NB_BLOCK * sizeof(int);
+	size_t tabsize = NB_BLOCK * sizeof(int);
 
-    HANDLE_ERROR(cudaMalloc((void**) &ptrDevtabGeneratorThread, NB_THREAD * sizeof(curandState)));
+	HANDLE_ERROR(cudaMalloc((void**) &ptrDevtabGeneratorThread, NB_THREAD * sizeof(curandState)));
 
-    HANDLE_ERROR(cudaMalloc((void**) &ptrDevTab, tabsize));
+	HANDLE_ERROR(cudaMalloc((void**) &ptrDevTab, tabsize));
 
-    kernelGenRandom<<<blockPerGrid,threadPerBlock>>>(ptrDevtabGeneratorThread,deviceId);
-    check_CUDA_Error("kernelGenRandom");
+	kernelGenRandom<<<blockPerGrid,threadPerBlock>>>(ptrDevtabGeneratorThread,deviceId);
+	check_CUDA_Error("kernelGenRandom");
 
-    kernelReduction<<<blockPerGrid,threadPerBlock>>>(ptrDevtabGeneratorThread,ptrDevTab,nperThread);
-    check_CUDA_Error("kernelReduction");
+	kernelReduction<<<blockPerGrid,threadPerBlock>>>(ptrDevtabGeneratorThread,ptrDevTab,nperThread);
+	check_CUDA_Error("kernelReduction");
 
-    HANDLE_ERROR(cudaMemcpy(ptrHostTab,ptrDevTab,tabsize,cudaMemcpyDeviceToHost));
+	HANDLE_ERROR(cudaMemcpy(ptrHostTab,ptrDevTab,tabsize,cudaMemcpyDeviceToHost));
 
-    HANDLE_ERROR(cudaDeviceSynchronize());
+	HANDLE_ERROR(cudaDeviceSynchronize());
 
-    long sum=0;
-    for (int i = 0; i < NB_BLOCK; i++){
-	sum+=ptrHostTab[i];
-    }
+	long sum = 0;
+	for (int i = 0; i < NB_BLOCK; i++)
+	    {
+	    sum += ptrHostTab[i];
+	    }
 
-    double pi = (double) sum / nglobal * 4;
-    cout.precision(15);
-    cout << pi << endl;
+	double pi = (double) sum / nglobal * 4;
+	cout.precision(15);
+	cout << pi << endl;
 
-    HANDLE_ERROR(cudaFree(ptrDevtabGeneratorThread));
-    HANDLE_ERROR(cudaFree(ptrDevTab));
-    delete[] ptrHostTab;
+	HANDLE_ERROR(cudaFree(ptrDevtabGeneratorThread));
+	HANDLE_ERROR(cudaFree(ptrDevTab));
+	delete[] ptrHostTab;
+	}
     }
 
 /*--------------------------------------*\

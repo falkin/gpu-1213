@@ -46,7 +46,7 @@ int main(void)
 	{
 	// Goal : Preload driver, to pratice next benchmarking!
 	//Device::loadCudaDriverDeviceAll();// Force driver to be load for all GPU
-	Device::loadCudaDriver(0); // Force only drive for device 1 to be loaded
+	//Device::loadCudaDriver(0); // Force only drive for device 1 to be loaded
 
 	int nbDevice = Device::getDeviceCount();
 	//Device::printALL("All device available : ");
