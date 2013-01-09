@@ -61,13 +61,18 @@ int mainCore ( void ) {
 
 bool useRippling ( void ) {
   int deviceId = 0;
-  HANDLE_ERROR( cudaSetDevice(deviceId));
-  HANDLE_ERROR( cudaGLSetGLDevice(deviceId));
+  HANDLE_ERROR ( cudaSetDevice ( deviceId ) );
+  HANDLE_ERROR ( cudaGLSetGLDevice ( deviceId ) );
   RipplingImageCudaMOO ripplingA ( 600, 600, 0, 0.5 );
 
   bool isAnimationEnable = true;
   ImageCudaViewers imageViewer ( &ripplingA, isAnimationEnable );
   ImageCudaViewers::runALL ();
+
+  return true;
+}
+
+bool useHeater ( void ) {
 
   return true;
 }

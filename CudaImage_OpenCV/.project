@@ -3,6 +3,7 @@
 	<name>CudaImage_OpenCV</name>
 	<comment></comment>
 	<projects>
+		<project>BilatToolsOpenCV</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -3,6 +3,8 @@
 #include "limits.h"
 #include "Device.h"
 #include "cudaTools.h"
+#include "KernelFilterImageCudaViewer.h"
+#include "ImageCudaViewers.h"
 
 using std::cout;
 using std::endl;
@@ -14,22 +16,18 @@ using std::endl;
 /*--------------------------------------*\
  |*   Imported    *|
  \*-------------------------------------*/
-extern void helloCuda ( void );
-extern void reductionCuda ( void );
-extern void pimcCuda ( void );
+
 /*--------------------------------------*\
  |*   Public      *|
  \*-------------------------------------*/
 
-int mainCore ( int deviceId );
+int mainCore ();
 
 /*--------------------------------------*\
  |*   Private     *|
  \*-------------------------------------*/
 
-static bool useHello ( void );
-static bool useReduction ( void );
-static bool usePIMonteCarlo ( void );
+static bool useKernelFilter ( void );
 
 /*----------------------------------------------------------------------*\
  |*     Implementation          *|
@@ -39,13 +37,13 @@ static bool usePIMonteCarlo ( void );
  |*   Public      *|
  \*-------------------------------------*/
 
-int mainCore ( int deviceId ) {
+int mainCore () {
   //Device::print(deviceId, "Execute on device : ");
 
   bool isOk = true;
   //isOk &= useHello();
   //isOk &= useReduction();
-  isOk &= usePIMonteCarlo ();
+  isOk &= useKernelFilter ();
 
   cout << "\nisOK = " << isOk << endl;
   cout << "\nEnd : mainCore" << endl;
@@ -57,18 +55,14 @@ int mainCore ( int deviceId ) {
  |*   Private     *|
  \*-------------------------------------*/
 
-bool useHello ( void ) {
-  helloCuda ();
-  return true;
-}
-
-bool useReduction ( void ) {
-  reductionCuda ();
-  return true;
-}
-
-bool usePIMonteCarlo ( void ) {
-  pimcCuda ();
+bool useKernelFilter ( void ) {
+  int deviceId = 0;
+  HANDLE_ERROR( cudaSetDevice ( deviceId ) );
+  HANDLE_ERROR( cudaGLSetGLDevice ( deviceId ) );
+  cout << "Running Kernel labwork !" << endl;
+  KernelFilterImageCudaViewer kernel ( 1920, 1080, std::string ( "/home/studentmse9/hearc/cuda/data/nasaFHD.avi" ) );
+  ImageCudaViewers viewer ( &kernel );
+  ImageCudaViewers::runALL ();
   return true;
 }
 

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+<?fileVersion 4.0.0?>
+
+<cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
 		<cconfiguration id="0.137226647">
 			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="0.137226647" moduleId="org.eclipse.cdt.core.settings" name="CudaWin">
@@ -246,8 +248,8 @@
 			<resource resourceType="PROJECT" workspacePath="/Cuda_Image"/>
 		</configuration>
 		<configuration configurationName="visual"/>
-		<configuration configurationName="IntelLinux"/>
 		<configuration configurationName="IntelWin"/>
+		<configuration configurationName="IntelLinux"/>
 		<configuration configurationName="CudaWin">
 			<resource resourceType="PROJECT" workspacePath="/Cuda_Image"/>
 		</configuration>

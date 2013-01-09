@@ -4,7 +4,7 @@
 #
 # Contrainte
 #
-#	Dans les d�finitions de variables ci-dessous, ne laisser jamais d'espace � la fin!!!
+#	Dans les d���finitions de variables ci-dessous, ne laisser jamais d'espace ��� la fin!!!
 #
 
 ##############
@@ -13,6 +13,7 @@
 
 SRC_AUX+=../PRODUCTION/commonExt/include
 SRC_AUX+=../PRODUCTION/commonExt/linux
+SRC_AUX+=../PRODUCTION/commonExt/cuda
 
 #########
 # GCC #
