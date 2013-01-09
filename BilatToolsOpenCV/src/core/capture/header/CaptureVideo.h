@@ -1,7 +1,6 @@
 #ifndef CAPTURE_VIDEO_H_
 #define CAPTURE_VIDEO_H_
 
-
 #include "Capture_A.h"
 
 using namespace cv;
@@ -26,54 +25,53 @@ using namespace cv;
  * 		http://smplayer.sourceforge.net/
  * 	(S2) VirtualDub
  */
-class CaptureVideo : public Capture_A
-    {
-	/*--------------------------------------*\
+class CaptureVideo: public Capture_A {
+  /*--------------------------------------*\
 	|*		Constructor		*|
-	 \*-------------------------------------*/
+   \*-------------------------------------*/
 
-    public:
+public:
 
-	CaptureVideo(const string& videoName,const string&  title);
-	virtual ~CaptureVideo(void);
+  CaptureVideo ( const string& videoName, const string& title );
+  virtual ~CaptureVideo ( void );
 
-	/*--------------------------------------*\
+  /*--------------------------------------*\
 	|*		Methodes		*|
-	 \*-------------------------------------*/
+   \*-------------------------------------*/
 
-    public:
+public:
+  Mat capturer ( void );
 
-	/**
-	 * Temps a attendre entre 2 captures pour respecter fps original
-	 */
-	int getDelayMS(); // Override
+  /**
+   * Temps a attendre entre 2 captures pour respecter fps original
+   */
+  int getDelayMS (); // Override
 
-	bool isFpsKnown();
-	string getVideoName();
-	int getFps();
-	void printInfo(void);// Override
+  bool isFpsKnown ();
+  string getVideoName ();
+  int getFps ();
+  void printInfo ( void ); // Override
 
+private:
 
-    private:
+  void configure ();
+  VideoCapture* createStream ( const string& videoName );
 
-	void  configure();
-	VideoCapture*  createStream(const string& videoName);
-
-	/*--------------------------------------*\
+  /*--------------------------------------*\
 	|*		Attributs		*|
-	 \*-------------------------------------*/
+   \*-------------------------------------*/
 
-    private:
+private:
 
-	// Inputs
-	string videoName;
+  // Inputs
+  string videoName;
 
-	// Outputs
-	int delayMS;
-	bool isFpsConnu;
-	int fps;
+  // Outputs
+  int delayMS;
+  bool isFpsConnu;
+  int fps;
 
-    };
+};
 
 #endif
 

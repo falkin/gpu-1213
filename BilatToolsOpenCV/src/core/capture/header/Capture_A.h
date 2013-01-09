@@ -3,11 +3,9 @@
 
 #include <string>
 
-#include "cv.h"
-#include "highgui.h"
+#include <opencv2/opencv.hpp>
 #include "cudaTools.h"
 #include "Chronos.h"
-
 
 using namespace cv;
 
@@ -22,75 +20,75 @@ using namespace cv;
 /**
  * http://opencv.willowgarage.com/wiki/VideoCodecs
  */
-class Capture_A
-    {
-	/*--------------------------------------*\
+class Capture_A {
+  /*--------------------------------------*\
 	|*		Constructor		*|
-	 \*-------------------------------------*/
+   \*-------------------------------------*/
 
-    public:
+public:
 
-	Capture_A(VideoCapture* ptrCaptureStream,const string&  title);
-	virtual ~Capture_A(void);
+  Capture_A ( VideoCapture* ptrCaptureStream, const string& title );
+  virtual ~Capture_A ( void );
 
-	/*--------------------------------------*\
+  /*--------------------------------------*\
 	|*		Methodes		*|
-	 \*-------------------------------------*/
+   \*-------------------------------------*/
 
-    public:
+public:
 
-	VideoCapture* getVideoCapture();
-	int getW(void);
-	int getH(void);
-	string getTitle();
-	Chronos getChronos();
-	int fps();
+  VideoCapture* getVideoCapture ();
+  int getW ( void );
+  int getH ( void );
+  string getTitle ();
+  Chronos getChronos ();
+  int fps ();
 
-	bool isOpened(void);
-	int nbOctetImage();
-	long nbCapture();
+  bool isOpened ( void );
+  int nbOctetImage ();
+  long nbCapture ();
 
-	virtual void printInfo(void);
+  virtual void printInfo ( void );
 
-	/**
-	 * Temps a attendre entre 2 captures pour respecter fps original
-	 */
-	int dtMS();
+  /**
+   * Temps a attendre entre 2 captures pour respecter fps original
+   */
+  int dtMS ();
 
-	/**
-	 * To be call periodicly to obtain image
-	 */
-	Mat capturer(void);
+  /**
+   * To be call periodicly to obtain image
+   */
+  virtual Mat capturer ( void );
 
-	// Tools
-	static uchar4* castToUChar4(uchar* ptrTab);
-	static uchar4* castToUChar4(Mat* ptrMap);
+  // Tools
+  static uchar4* castToUChar4 ( uchar* ptrTab );
+  static uchar4* castToUChar4 ( Mat* ptrMap );
 
-    protected:
+protected:
 
-    private:
+private:
 
-	/*--------------------------------------*\
+  /*--------------------------------------*\
 	|*		Attributs		*|
-	 \*-------------------------------------*/
+   \*-------------------------------------*/
 
-    private:
+protected:
 
-	// Inputs
-	string title;
-	VideoCapture* ptrCaptureStream;
+  Mat matCaptureDest;
+  Mat matCaptureSrc;
+  long compteurCapture;
+  Chronos chrono;
+  VideoCapture* ptrCaptureStream;
 
-	// Tools
-	Mat matCaptureSrc;
+private:
 
-	// Outputs
-	float w;
-	int h;
-	Mat matCaptureDest;
-	long compteurCapture;
-	Chronos chrono;
+  // Inputs
+  string title;
 
-    };
+  // Outputs
+  float w;
+  int h;
+
+};
 
 #endif
 

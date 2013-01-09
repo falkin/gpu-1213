@@ -20,9 +20,9 @@ using std::endl;
  |*		Private			*|
  \*-------------------------------------*/
 
-static bool useVideo(void);
-static bool useCamera(void);
-static void show(Capture_A* ptrCaptureur);
+static bool useVideo ( void );
+static bool useCamera ( void );
+static void show ( Capture_A* ptrCaptureur );
 
 /*----------------------------------------------------------------------*\
  |*			Implementation 					*|
@@ -32,60 +32,51 @@ static void show(Capture_A* ptrCaptureur);
  |*		Public			*|
  \*-------------------------------------*/
 
-int main(void)
-    {
-    bool isUseVideo = true;
+int main ( void ) {
+  bool isUseVideo = true;
 
-    if (isUseVideo)
-	{
-	return useVideo();
-	}
-    else
-	{
-	return useCamera();
-	}
-    }
+  if ( isUseVideo ) {
+    return useVideo ();
+  } else {
+    return useCamera ();
+  }
+}
 
 /*--------------------------------------*\
  |*		Private			*|
  \*-------------------------------------*/
 
-bool useVideo(void)
-    {
-    string videoName = "C:\\Users\\bilat\\Desktop\\nasaFHD.avi";
-    string title = "Tuto Video";
+bool useVideo ( void ) {
+  string videoName = "/home/studentmse9/hearc/cuda/data/nasaFHD.avi";
+  string title = "Tuto Video";
 
-    CaptureVideo captureur(videoName, title);
+  CaptureVideo captureur ( videoName, title );
 
-    if (captureur.isOpened())
-	{
-	show(&captureur);
-	}
+  if ( captureur.isOpened () ) {
+    show ( &captureur );
+  }
 
-    return true;
-    }
+  return true;
+}
 
-bool useCamera(void)
-    {
-    int idCamera = 0;
-    string title = "Tuto Camera";
+bool useCamera ( void ) {
+  int idCamera = 0;
+  string title = "Tuto Camera";
 
-    // CaptureCamera captureur(idCamera, title,320,160);
-    CaptureCamera captureur(idCamera, title);
+  // CaptureCamera captureur(idCamera, title,320,160);
+  CaptureCamera captureur ( idCamera, title );
 
-    if (captureur.isOpened())
-	{
-	show(&captureur);
-	}
+  if ( captureur.isOpened () ) {
+    show ( &captureur );
+  }
 
-    return true;
-    }
+  return true;
+}
 
-void show(Capture_A* ptrCaptureur)
-    {
-    SequenceViever sequenceViever(ptrCaptureur);
-    sequenceViever.run();
-    }
+void show ( Capture_A* ptrCaptureur ) {
+  SequenceViever sequenceViever ( ptrCaptureur );
+  sequenceViever.run ();
+}
 
 /*----------------------------------------------------------------------*\
  |*			End	 					*|
