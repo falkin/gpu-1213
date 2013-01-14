@@ -4,11 +4,11 @@
 #include "ImageCudaMOOs_A.h"
 #include "Sphere.h"
 
-class ImageCudaMOO: public ImageCudaMOOs_A
+class RayTracingImageCudaMOO: public ImageCudaMOOs_A
     {
     public:
-	ImageCudaMOO(unsigned int w, unsigned int h, float tsStart = 0, float dt = 1, int nbSphere = 10);
-	virtual ~ImageCudaMOO();
+	RayTracingImageCudaMOO(unsigned int w, unsigned int h, float tsStart = 0, float dt = 1, int nbSphere = 10);
+	virtual ~RayTracingImageCudaMOO();
 	void animationStep(bool& isNeedUpdateView);
 
     private:

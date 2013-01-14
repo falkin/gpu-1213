@@ -10,7 +10,7 @@ extern void launchKernelFillImageRay(uchar4* ptrDevImageGL, int w, int h, float 
  |*		Public			*|
  \*-------------------------------------*/
 
-ImageCudaMOO::ImageCudaMOO(unsigned int w, unsigned int h, float tStart, float dt, int nbSphere) :
+RayTracingImageCudaMOO::RayTracingImageCudaMOO(unsigned int w, unsigned int h, float tStart, float dt, int nbSphere) :
 	ImageCudaMOOs_A(w, h), t(tStart), dt(dt), nbSphere(nbSphere)
     {
 
@@ -37,12 +37,12 @@ ImageCudaMOO::ImageCudaMOO(unsigned int w, unsigned int h, float tStart, float d
 
     }
 
-ImageCudaMOO::~ImageCudaMOO()
+RayTracingImageCudaMOO::~RayTracingImageCudaMOO()
     {
 
     }
 
-void ImageCudaMOO::animationStep(bool& isNeedUpdateView)
+void RayTracingImageCudaMOO::animationStep(bool& isNeedUpdateView)
     {
     t += dt;
     }
@@ -51,7 +51,7 @@ void ImageCudaMOO::animationStep(bool& isNeedUpdateView)
  |*		Private			*|
  \*-------------------------------------*/
 
-void ImageCudaMOO::fillImageGL(uchar4* ptrDevImageGL, int w, int h)
+void RayTracingImageCudaMOO::fillImageGL(uchar4* ptrDevImageGL, int w, int h)
     {
     launchKernelFillImageRay(ptrDevImageGL, w, h, t, ptrHostSphereArray, ptrDevSphereArray,nbSphere);
     }

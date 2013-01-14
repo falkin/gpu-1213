@@ -88,7 +88,7 @@ bool useRayTracing(void)
     int deviceId = 0;
     HANDLE_ERROR(cudaSetDevice(deviceId));
     HANDLE_ERROR(cudaGLSetGLDevice(deviceId));
-    ImageCudaMOO image(600, 600, 0, 0.005, 20);
+    RayTracingImageCudaMOO image(600, 600, 0, 0.005, 20);
 
     bool isAnimationEnable = true;
     ImageCudaViewers imageViewer(&image, isAnimationEnable);
