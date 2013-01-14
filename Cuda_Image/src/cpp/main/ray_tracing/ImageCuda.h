@@ -2,20 +2,25 @@
 #define IMAGECUDA_H
 
 #include "ImageCudaMOOs_A.h"
+#include "Sphere.h"
 
-class ImageCudaMOO: public ImageCudaMOOs_A {
-public:
-  ImageCudaMOO ( unsigned int w, unsigned int h, float tsStart = 0, float dt = 1 );
-  virtual ~ImageCudaMOO ();
-  void animationStep ( bool& isNeedUpdateView );
+class ImageCudaMOO: public ImageCudaMOOs_A
+    {
+    public:
+	ImageCudaMOO(unsigned int w, unsigned int h, float tsStart = 0, float dt = 1, int nbSphere = 10);
+	virtual ~ImageCudaMOO();
+	void animationStep(bool& isNeedUpdateView);
 
-private:
-  void fillImageGL ( uchar4* ptrDevImageGL, int w, int h );
-  void setPixel ( int i, int j, float t );
-  unsigned char computeColor ( int i, int j, float t, int w, int h );
+    private:
+	void fillImageGL(uchar4* ptrDevImageGL, int w, int h);
+	void setPixel(int i, int j, float t);
+	unsigned char computeColor(int i, int j, float t, int w, int h);
 
-  float t;
-  float dt;
-};
+	float t;
+	float dt;
+	Sphere* ptrHostSphereArray;
+	Sphere* ptrDevSphereArray;
+	int nbSphere;
+    };
 
 #endif
