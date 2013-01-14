@@ -13,6 +13,8 @@
 class Sphere
     {
     public:
+	__host__
+	Sphere(){}
 
 	__host__
 	Sphere(float3 centre, float rayon, float hue){

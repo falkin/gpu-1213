@@ -18,6 +18,7 @@ ImageCudaMOO::ImageCudaMOO(unsigned int w, unsigned int h, float tStart, float d
 
     ptrHostSphereArray = new Sphere[nbSphere];
 
+
     float3 centre;
     int radius;
     float hue;

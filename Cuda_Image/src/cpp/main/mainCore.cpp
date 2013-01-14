@@ -4,6 +4,7 @@
 #include "cudaTools.h"
 #include "ImageCudaViewers.h"
 #include "RipplingImageCuda.h"
+#include "ImageCuda.h"
 using std::cout;
 using std::endl;
 
@@ -20,13 +21,14 @@ using std::endl;
  |*     Public          *|
  \*-------------------------------------*/
 
-int mainCore ( void );
+int mainCore(void);
 
 /*--------------------------------------*\
  |*     Private         *|
  \*-------------------------------------*/
 
-static bool useRippling ( void );
+static bool useRippling(void);
+static bool useRayTracing(void);
 //static bool useMandelbrot ( void );
 //static bool useJulia ( void );
 
@@ -38,44 +40,62 @@ static bool useRippling ( void );
  |*     Public          *|
  \*-------------------------------------*/
 
-int mainCore ( void ) {
-  bool isOk = true;
-  Chronos chrono;
-  chrono.start ();
+int mainCore(void)
+    {
+    bool isOk = true;
+    Chronos chrono;
+    chrono.start();
 
-  //isOk &= useHello();
+    //isOk &= useHello();
 
-  isOk &= useRippling ();
-  //isOk &= useMandelbrot();
-  //isOk &= useJulia ();
+    //isOk &= useRippling();
+    isOk &= useRayTracing();
+    //isOk &= useMandelbrot();
+    //isOk &= useJulia ();
 
-  cout << "\n-------------------------------------------------" << endl;
-  cout << "End Main : isOk = " << isOk << endl;
+    cout << "\n-------------------------------------------------" << endl;
+    cout << "End Main : isOk = " << isOk << endl;
 
-  return isOk ? EXIT_SUCCESS : EXIT_FAILURE;
-}
+    return isOk ? EXIT_SUCCESS : EXIT_FAILURE;
+    }
 
 /*--------------------------------------*\
  |*     Private         *|
  \*-------------------------------------*/
 
-bool useRippling ( void ) {
-  int deviceId = 0;
-  HANDLE_ERROR ( cudaSetDevice ( deviceId ) );
-  HANDLE_ERROR ( cudaGLSetGLDevice ( deviceId ) );
-  RipplingImageCudaMOO ripplingA ( 600, 600, 0, 0.5 );
+bool useRippling(void)
+    {
+    int deviceId = 0;
+    HANDLE_ERROR(cudaSetDevice(deviceId));
+    HANDLE_ERROR(cudaGLSetGLDevice(deviceId));
+    RipplingImageCudaMOO ripplingA(600, 600, 0, 0.5);
 
-  bool isAnimationEnable = true;
-  ImageCudaViewers imageViewer ( &ripplingA, isAnimationEnable );
-  ImageCudaViewers::runALL ();
+    bool isAnimationEnable = true;
+    ImageCudaViewers imageViewer(&ripplingA, isAnimationEnable);
+    ImageCudaViewers::runALL();
 
-  return true;
-}
+    return true;
+    }
 
-bool useHeater ( void ) {
+bool useHeater(void)
+    {
 
-  return true;
-}
+    return true;
+    }
+
+bool useRayTracing(void)
+    {
+    int deviceId = 0;
+    HANDLE_ERROR(cudaSetDevice(deviceId));
+    HANDLE_ERROR(cudaGLSetGLDevice(deviceId));
+    ImageCudaMOO image(600, 600, 0, 0.005, 20);
+
+    bool isAnimationEnable = true;
+    ImageCudaViewers imageViewer(&image, isAnimationEnable);
+    ImageCudaViewers::runALL();
+
+    return true;
+    }
 
 //bool useMandelbrot(void)
 //    {
