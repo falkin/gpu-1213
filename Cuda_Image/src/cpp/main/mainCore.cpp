@@ -4,7 +4,7 @@
 #include "cudaTools.h"
 #include "ImageCudaViewers.h"
 #include "RipplingImageCuda.h"
-#include "ImageCuda.h"
+#include "RayTracingImageCuda.h"
 using std::cout;
 using std::endl;
 

@@ -1,4 +1,4 @@
-#include "ImageCuda.h"
+#include "RayTracingImageCuda.h"
 #include <math.h>
 #include "aleaTools.h"
 
