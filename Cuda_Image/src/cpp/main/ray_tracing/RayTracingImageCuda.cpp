@@ -5,7 +5,8 @@
 /*----------------------------------------------------------------------*\
  |*			Declaration 					*|
  \*---------------------------------------------------------------------*/
-extern void launchKernelFillImageRay(uchar4* ptrDevImageGL, int w, int h, float t, Sphere* ptrHostSphereArray, Sphere* ptrDevSphereArray, int nbSphere);
+extern void launchKernelFillImageRay(uchar4* ptrDevImageGL, int w, int h, float t, Sphere* ptrHostSphereArray, Sphere* ptrDevSphereArray, int nbSphere,
+	MemType memType);
 /*--------------------------------------*\
  |*		Public			*|
  \*-------------------------------------*/
@@ -14,10 +15,10 @@ RayTracingImageCudaMOO::RayTracingImageCudaMOO(unsigned int w, unsigned int h, f
 	ImageCudaMOOs_A(w, h), t(tStart), dt(dt), nbSphere(nbSphere)
     {
 
-    srand(time(NULL));
+    srand (time(NULL));
 
-    ptrHostSphereArray = new Sphere[nbSphere];
-
+ptrHostSphereArray    = new Sphere[nbSphere];
+    memType=SHARED;
 
     float3 centre;
     int radius;
@@ -33,8 +34,18 @@ RayTracingImageCudaMOO::RayTracingImageCudaMOO(unsigned int w, unsigned int h, f
 	ptrHostSphereArray[i] = *(new Sphere(centre, radius, hue));
 	}
     size_t arraySize = nbSphere* sizeof(Sphere);
-    HANDLE_ERROR(cudaMalloc((void**) &ptrDevSphereArray, arraySize));
-    HANDLE_ERROR(cudaMemcpy(ptrDevSphereArray,ptrHostSphereArray,arraySize,cudaMemcpyHostToDevice));
+
+    switch (memType)
+	{
+	case GLOBAL:
+	case SHARED:
+	HANDLE_ERROR(cudaMalloc((void**) &ptrDevSphereArray, arraySize));
+	HANDLE_ERROR(cudaMemcpy(ptrDevSphereArray,ptrHostSphereArray,arraySize,cudaMemcpyHostToDevice));
+	break;
+	case CONSTANT:
+	HANDLE_ERROR(cudaMemcpyToSymbol("ARRAY_DATA",ptrHostSphereArray,arraySize,0,cudaMemcpyHostToDevice));
+	break;
+	}
 
     }
 
@@ -54,7 +65,8 @@ void RayTracingImageCudaMOO::animationStep(bool& isNeedUpdateView)
 
 void RayTracingImageCudaMOO::fillImageGL(uchar4* ptrDevImageGL, int w, int h)
     {
-    launchKernelFillImageRay(ptrDevImageGL, w, h, t, ptrHostSphereArray, ptrDevSphereArray,nbSphere);
+
+    launchKernelFillImageRay(ptrDevImageGL, w, h, t, ptrHostSphereArray, ptrDevSphereArray, nbSphere, memType);
     }
 
 /*----------------------------------------------------------------------*\

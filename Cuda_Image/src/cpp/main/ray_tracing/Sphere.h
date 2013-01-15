@@ -10,6 +10,13 @@
  |*		Public			*|
  \*-------------------------------------*/
 
+enum MemType
+    {
+    GLOBAL,
+    SHARED,
+    CONSTANT,
+    };
+
 class Sphere
     {
     public:
@@ -62,7 +69,7 @@ class Sphere
 	    return hue;
 	    }
 
-    private:
+    public:
 	float rCarre;
 	float r;
 	float3 centre;

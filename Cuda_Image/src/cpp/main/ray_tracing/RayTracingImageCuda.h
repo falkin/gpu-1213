@@ -21,6 +21,7 @@ class RayTracingImageCudaMOO: public ImageCudaMOOs_A
 	Sphere* ptrHostSphereArray;
 	Sphere* ptrDevSphereArray;
 	int nbSphere;
+	MemType memType;
     };
 
 #endif
