@@ -3,6 +3,7 @@
 
 #include "Sphere.h"
 #include "ColorToolCuda.h"
+#include <math_constants.h>
 
 #define CUDART_PI_F 3.141592654f
 
@@ -29,16 +30,28 @@ void compute(uchar4& ptrColor, int dim, int i, int j, float t, Sphere* ptrDevSph
     ptrColor.x = ptrColor.y = ptrColor.z = 0;
 
     hsb.y = 1.0;
+    float minDistance = CUDART_INF_F;
+
+    int indexMin = -1;
     for (int i = 0; i < nbSphere; i++)
 	{
-	float hcarre = ptrDevSphereArray[i].hCarre(xysol);
-	if (ptrDevSphereArray[i].isBelow(hcarre))
+	Sphere* sphere = &ptrDevSphereArray[i];
+	float hcarre = sphere->hCarre(xysol);
+	float dz = sphere->dz(hcarre);
+	if (sphere->isBelow(hcarre) && sphere->distance(dz)<minDistance)
 	    {
-	    float dz = ptrDevSphereArray[i].dz(hcarre);
-	    hsb.z = ptrDevSphereArray[i].brightness(dz);
-	    hsb.x = hue_time_function(t, ptrDevSphereArray[i].getHue());
+	    minDistance = sphere->distance(dz);
+	    indexMin=i;
 	    }
 	}
+    if (indexMin != -1)
+	{
+	float hcarre = ptrDevSphereArray[indexMin].hCarre(xysol);
+	float dz = ptrDevSphereArray[indexMin].dz(hcarre);
+	hsb.z = ptrDevSphereArray[indexMin].brightness(dz);
+	hsb.x = hue_time_function(t, ptrDevSphereArray[indexMin].getHue());
+	}
+
     ColorToolCuda::HSB_TO_RVB(hsb, ptrColor);
     ptrColor.w = 255;
     }

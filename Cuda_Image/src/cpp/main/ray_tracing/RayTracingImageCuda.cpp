@@ -26,8 +26,9 @@ RayTracingImageCudaMOO::RayTracingImageCudaMOO(unsigned int w, unsigned int h, f
 	{
 	centre.x = uniformeAB(0, w);
 	centre.y = uniformeAB(0, h);
-	centre.z = uniformeAB(0, w + h);
-	radius = uniformeAB(15, 50);
+	centre.z = uniformeAB(10, 2*w);
+	radius = uniformeAB(10, w/8);
+
 	hue = uniforme01();
 	ptrHostSphereArray[i] = *(new Sphere(centre, radius, hue));
 	}
