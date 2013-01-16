@@ -1,39 +1,96 @@
 #include "Indice2D.h"
 #include "compute.h"
 #include "Sphere.h"
+#include <stdio.h>
 
-__global__ void kernelFillImageRay ( uchar4* ptrDevImageGL, int w, int h, float t , Sphere* ptrDevSphereArray, int nbSphere) {
-  int tid = Indice2D::tid ();
-  int nbThreads = Indice2D::nbThread ();
-  int s = tid;
-  int i, j;
-  while ( s < h * w ) {
-    Indice2D::pixelIJ ( s, w, i, j );
-    compute( ptrDevImageGL[s], w, i, j, t ,ptrDevSphereArray, nbSphere);
-    s += nbThreads;
+#define MAX_SPHERE 2700
 
-  }
-}
+__constant__ Sphere ARRAY_DATA[MAX_SPHERE];
 
-void launchKernelFillImageRay ( uchar4* ptrDevImageGL, int w, int h, float t ) {
-  dim3 dg = dim3 ( 16, 1, 1 );
-  dim3 db = dim3 ( 32, 1, 1 );
+__device__ void copyGMtoSM(Sphere* tabSM, Sphere* tabGM, int n);
 
-  int nbSphere = 10;
-  Sphere* ptrHostSphereArray = new Sphere[nbSphere];
-  Sphere* ptrDevSphereArray = NULL;
+extern __shared__ Sphere ptrShareSphereArray[];
 
-  size_t arraySize = nbSphere* sizeof(Sphere);
-  HANDLE_ERROR(cudaMalloc((void**) &ptrDevSphereArray, arraySize));
+__global__ void kernelFillImageRayShared(uchar4* ptrDevImageGL, int w, int h, float t, Sphere* ptrDevSphereArray, int nbSphere)
+    {
+    int tid = Indice2D::tid();
+    int tidLocal = Indice2D::tidLocalBlock();
+    int nbThreads = Indice2D::nbThread();
 
+    copyGMtoSM(ptrShareSphereArray, ptrDevSphereArray, nbSphere);
 
-  for (int i=0;i<nbSphere;i++)
-      {
-      float3 centre = {i*30,i*30,500};
-      ptrHostSphereArray[i] = *(new Sphere(centre,20.0,2.0));
-      }
+    int s = tid;
+    int i, j;
+    while (s < h * w)
+	{
+	Indice2D::pixelIJ(s, w, i, j);
+	compute(ptrDevImageGL[s], w, i, j, t, ptrShareSphereArray, nbSphere);
+	s += nbThreads;
+	}
+    }
 
-  HANDLE_ERROR(cudaMemcpy(ptrDevSphereArray,ptrHostSphereArray,arraySize,cudaMemcpyHostToDevice));
+__global__ void kernelFillImageRayConstant(uchar4* ptrDevImageGL, int w, int h, float t, int nbSphere)
+    {
+    int tid = Indice2D::tid();
+    int tidLocal = Indice2D::tidLocalBlock();
+    int nbThreads = Indice2D::nbThread();
 
-kernelFillImageRay<<<dg, db>>>(ptrDevImageGL, w, h, t, ptrDevSphereArray, nbSphere);
-}
+    int s = tid;
+    int i, j;
+    while (s < h * w)
+	{
+	Indice2D::pixelIJ(s, w, i, j);
+	compute(ptrDevImageGL[s], w, i, j, t, ARRAY_DATA, nbSphere);
+	s += nbThreads;
+	}
+    }
+
+__device__ void copyGMtoSM(Sphere* tabSM, Sphere* tabGM, int n)
+    {
+    int tidLocal = Indice2D::tidLocalBlock();
+    int nbThreadBlock = Indice2D::nbThreadBlock();
+
+    while (tidLocal < n)
+	{
+	tabSM[tidLocal] = tabGM[tidLocal];
+	tidLocal += nbThreadBlock;
+	}
+    __syncthreads();
+    }
+
+__global__ void kernelFillImageRayGlobal(uchar4* ptrDevImageGL, int w, int h, float t, Sphere* ptrDevSphereArray, int nbSphere)
+    {
+    int tid = Indice2D::tid();
+    int nbThreads = Indice2D::nbThread();
+    int s = tid;
+    int i, j;
+    while (s < h * w)
+	{
+	Indice2D::pixelIJ(s, w, i, j);
+	compute(ptrDevImageGL[s], w, i, j, t, ptrDevSphereArray, nbSphere);
+	s += nbThreads;
+	}
+    }
+
+void launchKernelFillImageRay(uchar4* ptrDevImageGL, int w, int h, float t, Sphere* ptrHostSphereArray, Sphere* ptrDevSphereArray, int nbSphere,
+	MemType memType)
+    {
+    dim3 dg = dim3(16, 1, 1);
+    dim3 db = dim3(32, 1, 1);
+    switch (memType)
+	{
+	case GLOBAL:
+	    kernelFillImageRayGlobal<<<dg, db>>>(ptrDevImageGL, w, h, t, ptrDevSphereArray, nbSphere);
+	    break;
+	case SHARED:
+	    {
+	    int nbByte = nbSphere * sizeof(Sphere);
+	    kernelFillImageRayShared<<<dg, db, nbByte>>>(ptrDevImageGL, w, h, t, ptrDevSphereArray, nbSphere);
+	    break;
+	    }
+	case CONSTANT:
+	    kernelFillImageRayConstant<<<dg, db>>>(ptrDevImageGL, w, h, t, nbSphere);
+	    break;
+	}
+
+    }

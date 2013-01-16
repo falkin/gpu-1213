@@ -2,12 +2,12 @@
 #define COMPUTE_H_
 
 #include "Sphere.h"
-#include "ColorToolCuda.h"
-#include <math_constants.h>
+#include "ColorTools.h"
+#include <limits>
+#include <stdio.h>
 
 #define CUDART_PI_F 3.141592654f
 
-__device__
 float hue_time_function(float t, float hue_t0)
     {
     float pi3_2 = 3 * CUDART_PI_F / 2;
@@ -15,8 +15,7 @@ float hue_time_function(float t, float hue_t0)
     return 1.0 / 2 + 1.0 / 2 * sinf(t + pi3_2 + param_t);
     }
 
-__device__
-void compute(uchar4& ptrColor, int dim, int i, int j, float t, Sphere* ptrDevSphereArray, int nbSphere)
+float3 compute(int i, int j, float t, Sphere* ptrDevSphereArray, int nbSphere)
     {
     float2 xysol =
 	{
@@ -26,11 +25,11 @@ void compute(uchar4& ptrColor, int dim, int i, int j, float t, Sphere* ptrDevSph
 	{
 	0, 0, 0
 	};
-    ;
-    ptrColor.x = ptrColor.y = ptrColor.z = 0;
+    float ptrColo =
+
 
     hsb.y = 1.0;
-    float minDistance = CUDART_INF_F;
+    float minDistance =  std::numeric_limits<float>::infinity();
 
     int indexMin = -1;
     for (int i = 0; i < nbSphere; i++)
@@ -38,10 +37,10 @@ void compute(uchar4& ptrColor, int dim, int i, int j, float t, Sphere* ptrDevSph
 	Sphere* sphere = &ptrDevSphereArray[i];
 	float hcarre = sphere->hCarre(xysol);
 	float dz = sphere->dz(hcarre);
-	if (sphere->isBelow(hcarre) && sphere->distance(dz)<minDistance)
+	if (sphere->isBelow(hcarre) && sphere->distance(dz) < minDistance)
 	    {
 	    minDistance = sphere->distance(dz);
-	    indexMin=i;
+	    indexMin = i;
 	    }
 	}
     if (indexMin != -1)
@@ -50,10 +49,12 @@ void compute(uchar4& ptrColor, int dim, int i, int j, float t, Sphere* ptrDevSph
 	float dz = ptrDevSphereArray[indexMin].dz(hcarre);
 	hsb.z = ptrDevSphereArray[indexMin].brightness(dz);
 	hsb.x = hue_time_function(t, ptrDevSphereArray[indexMin].getHue());
+
 	}
 
-    ColorToolCuda::HSB_TO_RVB(hsb, ptrColor);
-    ptrColor.w = 255;
+
+    return hsb;
+
     }
 
 /*--------------------------------------*\
