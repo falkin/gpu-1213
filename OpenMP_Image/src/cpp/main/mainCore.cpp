@@ -123,7 +123,7 @@ bool useRayTracing(void)
 		    cout << nbSphere << ",";
 		    cout << numThreads << ",";
 		    init.start();
-		    RayTracingImageCudaMOO rayTracing(d, d, 0, 0.005, nbSphere, 10);
+		    RayTracingImageCudaMOO rayTracing(d, d, 0, 0.005, nbSphere, numThreads);
 		    cout << init.stop() << ",";
 
 		    core.start();
