@@ -7,17 +7,20 @@
  |*			Declaration 					*|
  \*---------------------------------------------------------------------*/
 
-extern void launchKernelFillImageKernel ( uchar4* ptrDevImageGL, uchar4* ptrCudaImage, int w, int h );
+extern void initKernelFillImage( const unsigned int w, const unsigned int h );
+extern void launchKernelFillImageKernel ( uchar4* ptrDevImageGL, const uchar4* ptrCudaImage, const unsigned int w, const unsigned int h );
 /*--------------------------------------*\
  |*		Public			*|
  \*-------------------------------------*/
 KernelFilterImageCudaViewer::KernelFilterImageCudaViewer ( unsigned int w, unsigned int h, const std::string filename )
     : ImageCudaMOOs_A ( w, h ), _capture ( filename, std::string ( "Kernel" ) ) {
+  initKernelFillImage( w, h );
   std::cout << "Constructed KernelFilterImageCudaViewer" << std::endl;
   _capture.printInfo ();
 }
 
 void KernelFilterImageCudaViewer::animationStep ( bool& isNeedUpdateView ) {
+  isNeedUpdateView = true;
 }
 /*--------------------------------------*\
  |*		Private			*|
