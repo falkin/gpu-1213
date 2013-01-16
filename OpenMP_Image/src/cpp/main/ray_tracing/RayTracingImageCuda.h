@@ -7,11 +7,11 @@
 class RayTracingImageCudaMOO: public ImageMOOs
     {
     public:
-	RayTracingImageCudaMOO(unsigned int w, unsigned int h, float tsStart = 0, float dt = 1, int nbSphere = 10);
+	RayTracingImageCudaMOO(unsigned int w, unsigned int h, float tsStart = 0, float dt = 1, int nbSphere = 10, int numThreads = 4);
 	virtual ~RayTracingImageCudaMOO();
 	void animationStep(bool& isNeedUpdateView);
 
-    private:
+    public:
 	void fillImageGL();
 	void setPixel(int i, int j, float t);
 	unsigned char computeColor(int i, int j, float t, int w, int h);
@@ -20,6 +20,7 @@ class RayTracingImageCudaMOO: public ImageMOOs
 	float dt;
 	Sphere* ptrHostSphereArray;
 	int nbSphere;
+	int numThreads;
     };
 
 #endif
