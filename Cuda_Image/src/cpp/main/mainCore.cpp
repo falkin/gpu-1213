@@ -5,6 +5,7 @@
 #include "ImageCudaViewers.h"
 #include "RipplingImageCuda.h"
 #include "RayTracingImageCuda.h"
+#include "Chronos.h"
 using std::cout;
 using std::endl;
 
@@ -29,6 +30,7 @@ int mainCore(void);
 
 static bool useRippling(void);
 static bool useRayTracing(void);
+static bool useRayTracingMeasure(void);
 static bool demoAll(void);
 //static bool useMandelbrot ( void );
 //static bool useJulia ( void );
@@ -50,11 +52,10 @@ int mainCore(void)
     //isOk &= useHello();
 
     //isOk &= useRippling();
-    //isOk &= useRayTracing();
+    isOk &= useRayTracingMeasure();
     //isOk &= useMandelbrot();
     //isOk &= useJulia ();
-    isOk &= demoAll();
-
+    //isOk &= demoAll();
 
     cout << "\n-------------------------------------------------" << endl;
     cout << "End Main : isOk = " << isOk << endl;
@@ -76,10 +77,10 @@ bool demoAll(void)
     int height = width;
 
     RipplingImageCudaMOO rippling(width, height, 0, 0.5);
-    RayTracingImageCudaMOO rayTracing(width, height, 0, 0.005, 20);
+    RayTracingImageCudaMOO rayTracing(width, height, 0, 0.005, 50);
 
-    ImageCudaViewers imageViewerRippling(&rippling, true,false,0,0);
-    ImageCudaViewers imageViewerRayTracing(&rayTracing, true,false,width,0);
+    ImageCudaViewers imageViewerRippling(&rippling, true, false, 0, 0);
+    ImageCudaViewers imageViewerRayTracing(&rayTracing, true, false, width, 0);
 
     ImageCudaViewers::runALL();
 
@@ -109,15 +110,74 @@ bool useHeater(void)
 
 bool useRayTracing(void)
     {
-    int deviceId = 0;
+    int deviceId = 5;
     HANDLE_ERROR(cudaSetDevice(deviceId));
     HANDLE_ERROR(cudaGLSetGLDevice(deviceId));
-    RayTracingImageCudaMOO image(600, 600, 0, 0.005, 20);
+    RayTracingImageCudaMOO image(600, 600, 0, 0.005, 1500, SHARED);
 
     bool isAnimationEnable = true;
     ImageCudaViewers imageViewer(&image, isAnimationEnable);
     ImageCudaViewers::runALL();
 
+    return true;
+
+    }
+
+bool useRayTracingMeasure(void)
+    {
+    int deviceId = 4;
+    HANDLE_ERROR(cudaSetDevice(deviceId));
+    HANDLE_ERROR(cudaGLSetGLDevice(deviceId));
+    int maxDimension = 10000;
+    int nbMeasures = 1;
+
+    // Init chronos
+    Chronos kernelChrono;
+    Chronos initChrono;
+    Chronos getDataChrono;
+
+    cout.precision(10);
+
+    dim3 dg = dim3(16, 1, 1);
+    dim3 db = dim3(32, 1, 1);
+
+    for (int d = 2000; d < maxDimension; d += 1000)
+	{
+	size_t sizeImageOctet = d * d * sizeof(uchar4);
+	unsigned char* ptrHostImage = new unsigned char[sizeImageOctet];
+
+	uchar4* ptrDevImage = NULL;
+	HANDLE_ERROR(cudaMalloc((void**) &ptrDevImage, sizeImageOctet));
+
+	for (int nbSphere = 100; nbSphere < MAX_SPHERE; nbSphere += 500)
+	    {
+	    for (int memType = 0; memType < NBMEMTYPE; memType++)
+		{
+		for (int i = 0; i < nbMeasures; i++)
+		    {
+		    cout << memType << ",";
+		    cout << d << ",";
+		    cout << nbSphere << ",";
+		    initChrono.start();
+		    RayTracingImageCudaMOO image(d, d, 0, 0.005, 100, (MemType) memType, dg, db);
+		    HANDLE_ERROR(cudaDeviceSynchronize());
+		    initChrono.stop();
+		    cout << initChrono.stop() << ",";
+
+		    kernelChrono.start();
+		    image.fillImageGL(ptrDevImage, d, d);
+		    HANDLE_ERROR(cudaDeviceSynchronize());
+		    cout << kernelChrono.stop() << ",";
+
+		    getDataChrono.start();
+		    HANDLE_ERROR(cudaMemcpy(ptrHostImage, ptrDevImage, sizeImageOctet, cudaMemcpyDeviceToHost));
+		    HANDLE_ERROR(cudaDeviceSynchronize());
+		    cout << getDataChrono.stop() << endl;
+		    }
+		}
+	    }
+	HANDLE_ERROR(cudaFree(ptrDevImage));
+	}
     return true;
     }
 

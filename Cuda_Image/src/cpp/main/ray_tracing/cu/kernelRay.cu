@@ -3,7 +3,7 @@
 #include "Sphere.h"
 #include <stdio.h>
 
-#define MAX_SPHERE 2700
+
 
 __constant__ Sphere ARRAY_DATA[MAX_SPHERE];
 
@@ -73,10 +73,8 @@ __global__ void kernelFillImageRayGlobal(uchar4* ptrDevImageGL, int w, int h, fl
     }
 
 void launchKernelFillImageRay(uchar4* ptrDevImageGL, int w, int h, float t, Sphere* ptrHostSphereArray, Sphere* ptrDevSphereArray, int nbSphere,
-	MemType memType)
+	MemType memType, dim3 dg, dim3 db)
     {
-    dim3 dg = dim3(16, 1, 1);
-    dim3 db = dim3(32, 1, 1);
     switch (memType)
 	{
 	case GLOBAL:
