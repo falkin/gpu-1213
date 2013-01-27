@@ -7,13 +7,13 @@
 /*--------------------------------------*\
  |*   UTILS                             *|
  \*-------------------------------------*/
-typedef bool (*compare) ( const unsigned char val1, const unsigned char val2 );
+typedef bool (*compare) ( const uint8_t val1, const uint8_t val2 );
 
-__device__ bool min ( const unsigned char val1, const unsigned char val2 ) {
+__device__ bool min ( const uint8_t val1, const uint8_t val2 ) {
   return val1 > val2;
 }
 
-__device__ bool max ( const unsigned char val1, const unsigned char val2 ) {
+__device__ bool max ( const uint8_t val1, const uint8_t val2 ) {
   return val1 < val2;
 }
 
@@ -25,7 +25,7 @@ __device__ bool max ( const unsigned char val1, const unsigned char val2 ) {
  * @param comp the function used to compare
  * @param result the result from min-or-max computation
  */
-__device__ void minOrMax ( const unsigned char val1, const unsigned char val2, const compare comp, unsigned char* result ) {
+__device__ void minOrMax ( const uint8_t val1, const uint8_t val2, const compare comp, uint8_t* result ) {
   *result = val1;
   if ( comp ( val1, val2 ) ) {
     *result = val2;
@@ -41,9 +41,8 @@ __device__ void minOrMax ( const unsigned char val1, const unsigned char val2, c
  * @param comp compare function
  * @param result resulting value from comparaison
  */
-__device__ void minOrMax3 ( const unsigned char r, const unsigned char g, const unsigned char b, const compare comp,
-    unsigned char* result ) {
-  unsigned char resultrg, resultgb;
+__device__ void minOrMax3 ( const uint8_t r, const uint8_t g, const uint8_t b, const compare comp, uint8_t* result ) {
+  uint8_t resultrg, resultgb;
   minOrMax ( r, g, comp, &resultrg );
   minOrMax ( g, b, comp, &resultgb );
   minOrMax ( resultrg, resultgb, comp, result );
@@ -52,7 +51,7 @@ __device__ void minOrMax3 ( const unsigned char r, const unsigned char g, const 
 /*--------------------------------------*\
  |*   GPU Globals                       *|
  \*-------------------------------------*/
-texture<unsigned char, 2, cudaReadModeElementType> texBWImage;
+texture<uint8_t, 2, cudaReadModeElementType> texBWImage;
 
 /**
  * Computes Grayscale image from RGB image.
@@ -66,17 +65,16 @@ texture<unsigned char, 2, cudaReadModeElementType> texBWImage;
  * @param h height of the image
  * @param ptrDevBWImage black&white image computed
  */
-__global__ void kernelRGBImageToBW_Lightness ( const uchar4* ptrDevRGBImage, const unsigned int w, const unsigned int h,
-    unsigned char* ptrDevBWImage ) {
+__global__ void kernelRGBImageToBW_Lightness ( const uchar4* ptrDevRGBImage, const uint32_t w, const uint32_t h, uint8_t* ptrDevBWImage ) {
   int tid = Indice2D::tid ();
   int nbThreads = Indice2D::nbThread ();
   int s = tid;
   size_t size = h * w;
   while ( s < size ) {
-    unsigned char minresult, maxresult;
+    uint8_t minresult, maxresult;
     minOrMax3 ( ptrDevRGBImage[s].x, ptrDevRGBImage[s].y, ptrDevRGBImage[s].z, max, &maxresult );
     minOrMax3 ( ptrDevRGBImage[s].x, ptrDevRGBImage[s].y, ptrDevRGBImage[s].z, min, &minresult );
-    unsigned char gray = ( maxresult + minresult ) / 2;
+    uint8_t gray = ( maxresult + minresult ) / 2;
     ptrDevBWImage[s] = gray;
     s += nbThreads;
   }
@@ -94,14 +92,13 @@ __global__ void kernelRGBImageToBW_Lightness ( const uchar4* ptrDevRGBImage, con
  * @param h height of the image
  * @param ptrDevBWImage black&white image computed
  */
-__global__ void kernelRGBImageToBW_Average ( const uchar4* ptrDevRGBImage, const unsigned int w, const unsigned int h,
-    unsigned char* ptrDevBWImage ) {
+__global__ void kernelRGBImageToBW_Average ( const uchar4* ptrDevRGBImage, const uint32_t w, const uint32_t h, uint8_t* ptrDevBWImage ) {
   int tid = Indice2D::tid ();
   int nbThreads = Indice2D::nbThread ();
   int s = tid;
   size_t size = h * w;
   while ( s < size ) {
-    unsigned char gray = ( ptrDevRGBImage[s].x + ptrDevRGBImage[s].y + ptrDevRGBImage[s].z ) / 3;
+    uint8_t gray = ( ptrDevRGBImage[s].x + ptrDevRGBImage[s].y + ptrDevRGBImage[s].z ) / 3;
     ptrDevBWImage[s] = gray;
     s += nbThreads;
   }
@@ -119,8 +116,7 @@ __global__ void kernelRGBImageToBW_Average ( const uchar4* ptrDevRGBImage, const
  * @param h height of the image
  * @param ptrDevBWImage black&white image computed
  */
-__global__ void kernelRGBImageToBW_Luminance ( const uchar4* ptrDevRGBImage, const unsigned int w, const unsigned int h,
-    unsigned char* ptrDevBWImage ) {
+__global__ void kernelRGBImageToBW_Luminance ( const uchar4* ptrDevRGBImage, const uint32_t w, const uint32_t h, uint8_t* ptrDevBWImage ) {
   int tid = Indice2D::tid ();
   int nbThreads = Indice2D::nbThread ();
   int s = tid;
@@ -129,7 +125,7 @@ __global__ void kernelRGBImageToBW_Luminance ( const uchar4* ptrDevRGBImage, con
   const float G_FACTOR = 0.71f;
   const float B_FACTOR = 0.07f;
   while ( s < size ) {
-    unsigned char gray = ( ptrDevRGBImage[s].x * R_FACTOR ) + ( ptrDevRGBImage[s].y * G_FACTOR ) + ( ptrDevRGBImage[s].z * B_FACTOR );
+    uint8_t gray = ( ptrDevRGBImage[s].x * R_FACTOR ) + ( ptrDevRGBImage[s].y * G_FACTOR ) + ( ptrDevRGBImage[s].z * B_FACTOR );
     ptrDevBWImage[s] = gray;
     s += nbThreads;
   }
@@ -143,8 +139,7 @@ __global__ void kernelRGBImageToBW_Luminance ( const uchar4* ptrDevRGBImage, con
  * @param h heigth of the image
  * @param ptrDevImageGL OpenGL context image
  */
-__global__ void kernelDisplayBWImage ( const unsigned char* ptrDevBWImage, const unsigned int w, const unsigned int h,
-    uchar4* ptrDevImageGL ) {
+__global__ void kernelDisplayBWImage ( const uint8_t* ptrDevBWImage, const uint32_t w, const uint32_t h, uchar4* ptrDevImageGL ) {
   int tid = Indice2D::tid ();
   int nbThreads = Indice2D::nbThread ();
   int s = tid;
@@ -166,23 +161,23 @@ __global__ void kernelDisplayBWImage ( const unsigned char* ptrDevBWImage, const
  * @param i i-th position of the image
  * @param j j-th position of the image
  */
-__device__ float convolutionKernelTexture ( const float* kernel, const unsigned int k, const unsigned int center, const unsigned int kHalf,
-    const unsigned int i, const unsigned int j ) {
+__device__ float convolutionKernelTexture ( const float* ptrDevKernel, const uint32_t k, const uint32_t center, const uint32_t kHalf,
+    const uint32_t i, const uint32_t j ) {
   float SE, SO, NE, NO;
   float CH, CV;
-  for ( unsigned int u = 0; u < kHalf; u++ ) {
-    for ( unsigned int v = 0; v < kHalf; v++ ) {
-      SE += kernel[( center + k * v ) + u] * tex2D ( texBWImage, i + v, j + u );
-      SO += kernel[( center + k * v ) - u] * tex2D ( texBWImage, i + v, j - u );
-      NE += kernel[( center - k * v ) + u] * tex2D ( texBWImage, i - v, j + u );
-      NO += kernel[( center - k * v ) - u] * tex2D ( texBWImage, i - v, j - u );
+  for ( uint32_t u = 1; u <= kHalf; u++ ) {
+    for ( uint32_t v = 1; v <= kHalf; v++ ) {
+      SE += ptrDevKernel[( center + k * v ) + u] * tex2D ( texBWImage, i + v, j + u );
+      SO += ptrDevKernel[( center + k * v ) - u] * tex2D ( texBWImage, i + v, j - u );
+      NE += ptrDevKernel[( center - k * v ) + u] * tex2D ( texBWImage, i - v, j + u );
+      NO += ptrDevKernel[( center - k * v ) - u] * tex2D ( texBWImage, i - v, j - u );
     }
   }
   for ( int u = -( kHalf ); u < ( kHalf ); u++ ) {
-    CH += kernel[center + u] * tex2D ( texBWImage, i, j + u );
-    CV += kernel[center + k * u] * tex2D ( texBWImage, i + u, j );
+    CH += ptrDevKernel[center + u] * tex2D ( texBWImage, i, j + u );
+    CV += ptrDevKernel[center + k * u] * tex2D ( texBWImage, i + u, j );
   }
-  return SE + SO + NE + NO + CH + CV - ( kernel[center] * tex2D ( texBWImage, i, j ) );
+  return SE + SO + NE + NO + CH + CV - ( ptrDevKernel[center] * tex2D ( texBWImage, i, j ) );
 }
 
 /**
@@ -194,7 +189,7 @@ __device__ float convolutionKernelTexture ( const float* kernel, const unsigned 
  * @param k number of column from the kernel
  * @param
  */
-__global__ void kernelConvolutionTexture ( const unsigned int w, const unsigned int h, const float* kernel, const unsigned int k,
+__global__ void kernelConvolutionTexture ( const uint32_t w, const uint32_t h, const float* ptrDevKernel, const uint32_t k,
     uchar4* ptrDevImageGL ) {
   int tid = Indice2D::tid ();
   int nbThreads = Indice2D::nbThread ();
@@ -202,13 +197,13 @@ __global__ void kernelConvolutionTexture ( const unsigned int w, const unsigned 
   size_t size = h * w;
   int i, j;
   int kHalf = ( k / 2 );
-  int center = ( k * kHalf );
+  int center = ( k * kHalf ) + kHalf;
   float convolution;
   while ( s < size ) {
     Indice2D::pixelIJ ( s, w, i, j );
-    convolution = convolutionKernelTexture ( kernel, k, center, kHalf, i, j );
+    convolution = convolutionKernelTexture ( ptrDevKernel, k, center, kHalf, i, j );
     ptrDevImageGL[s].w = 255;
-    ptrDevImageGL[s].x = ptrDevImageGL[s].y = ptrDevImageGL[s].z = convolution;
+    ptrDevImageGL[s].x = ptrDevImageGL[s].y = ptrDevImageGL[s].z = (unsigned char) ( convolution + 64.0f );
     s += nbThreads;
   }
 }
@@ -217,15 +212,17 @@ __global__ void kernelConvolutionTexture ( const unsigned int w, const unsigned 
  |*   CPU Globals                       *|
  \*-------------------------------------*/
 struct CudaImagesSizes {
-  unsigned int w;
-  unsigned int h;
+  uint32_t w;
+  uint32_t h;
   size_t rgb_pitch;
   size_t rgb_size;
   size_t bw_pitch;
   size_t bw_size;
+  size_t kernel_size;
 };
 static uchar4* ptrDevCudaRGBImage = NULL;
-static unsigned char* ptrDevCudaBWImage = NULL;
+static uint8_t* ptrDevCudaBWImage = NULL;
+static float* ptrDevKernel = NULL;
 static CudaImagesSizes sizes;
 
 /**
@@ -234,26 +231,35 @@ static CudaImagesSizes sizes;
  * @param w width of the image
  * @param h heigth of the image
  */
-void initKernelFillImage ( const unsigned int w, const unsigned int h ) {
+void initKernelFillImage ( const uint32_t w, const uint32_t h, const float* kernel, const size_t kernelSize ) {
   size_t rgb_size = sizeof(uchar4) * h * w;
-  size_t bw_size = sizeof(unsigned char) * h * w;
+  size_t bw_size = sizeof(uint8_t) * h * w;
   sizes.w = w;
   sizes.h = h;
   sizes.rgb_pitch = sizeof(uchar4) * w;
   sizes.rgb_size = rgb_size;
-  sizes.bw_pitch = sizeof(unsigned char) * w;
+  sizes.bw_pitch = sizeof(uint8_t) * w;
   sizes.bw_size = bw_size;
+  sizes.kernel_size = kernelSize;
   HANDLE_ERROR( cudaMalloc((void**) &ptrDevCudaRGBImage, rgb_size) );
   HANDLE_ERROR( cudaMalloc((void**) &ptrDevCudaBWImage, bw_size ) );
+  HANDLE_ERROR( cudaMalloc((void**) &ptrDevKernel, kernelSize) );
+
+  // Copy kernel to global memory
+  HANDLE_ERROR( cudaMemcpy( ptrDevKernel, kernel, sizes.kernel_size, cudaMemcpyHostToDevice ) );
+
   // Create tex, bind tex to ptrDevCudaBWImage
   texBWImage.addressMode[0] = cudaAddressModeClamp;
   texBWImage.addressMode[1] = cudaAddressModeClamp;
   texBWImage.filterMode = cudaFilterModePoint;
   texBWImage.normalized = false; // coordinate not in [0, 1]
-  cudaChannelFormatDesc channelDesc = cudaCreateChannelDesc<unsigned char> ();
+  cudaChannelFormatDesc channelDesc = cudaCreateChannelDesc<uint8_t> ();
   HANDLE_ERROR( cudaBindTexture2D(NULL, texBWImage, ptrDevCudaBWImage, channelDesc, w, h, sizes.bw_pitch ) );
 }
 
+/**
+ *
+ */
 void freeKernelFillImageKernel () {
 
 }
@@ -275,12 +281,14 @@ void freeKernelFillImageKernel () {
  * @param w width of the image
  * @param h heigth of the image
  */
-void launchKernelFillImageKernel ( uchar4* ptrDevImageGL, const uchar4* ptrCudaImage, const unsigned int w, const unsigned int h ) {
+void launchKernelFillImageKernel ( uchar4* ptrDevImageGL, const uchar4* ptrCudaImage, const uint32_t w, const uint32_t h ) {
   HANDLE_ERROR( cudaMemcpy( ptrDevCudaRGBImage, ptrCudaImage, sizes.rgb_size, cudaMemcpyHostToDevice ) );
   dim3 dg = dim3 ( 16, 1, 1 );
   dim3 db = dim3 ( 32, 1, 1 );
-kernelRGBImageToBW_Lightness<<< dg, db >>>(ptrDevCudaRGBImage, w, h, ptrDevCudaBWImage );
-//HANDLE_ERROR( cudaDeviceSynchronize() );
-//kernelDisplayBWImage<<< dg, db >>>(ptrDevCudaBWImage, w, h, ptrDevImageGL);
-// TODO:
+  kernelRGBImageToBW_Lightness<<< dg, db >>> ( ptrDevCudaRGBImage, w, h, ptrDevCudaBWImage );
+  //HANDLE_ERROR( cudaDeviceSynchronize() );
+  kernelConvolutionTexture<<< dg, db >>> ( w, h, ptrDevKernel, 9, ptrDevImageGL );
+  //kernelDisplayBWImage<<< dg, db >>> ( ptrDevCudaBWImage, w, h, ptrDevImageGL );
+  // TODO: Use switch to launch memory cases
+  ;//
 }

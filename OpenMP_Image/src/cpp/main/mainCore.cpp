@@ -80,7 +80,7 @@ bool useMandelbrot ( void ) {
   float y0 = -1.3;
   float y1 = 1.3;
 
-  Mandelbrot mandel ( 800, 600, DomaineMaths ( x0, y0, x1, y1 ), 52 );
+  Mandelbrot mandel ( 8, 8, DomaineMaths ( x0, y0, x1, y1 ), 52 );
   ImageViewers viewer ( &mandel );
   ImageViewers::runALL ();
   return true;

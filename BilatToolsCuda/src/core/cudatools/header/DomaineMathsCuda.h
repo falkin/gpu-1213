@@ -2,6 +2,7 @@
 #define DOMAINE_MATHS_H_
 
 #include "DomaineMaths.h"
+#include <stdint.h>
 
 class DomaineMathsCuda {
 public:
@@ -17,7 +18,7 @@ public:
   }
 
   __device__
-  void toXY ( const int i, const int j, double** x, double** y ) const {
+  void toXY ( const uint32_t i, const uint32_t j, double* x, double* y ) const {
     *x = x1 () + ( j * dx () );
     *y = y1 () + ( i * dy () );
   }

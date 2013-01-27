@@ -3,21 +3,10 @@
 #include "Calibreurs.h"
 #include <iostream>
 
-/*----------------------------------------------------------------------*\
- |*			Declaration 					*|
- \*---------------------------------------------------------------------*/
-
 #define SPACE_HEATER 10
 #define GRID_HEATER 50
-using std::cout;
-using std::endl;
-
-/*--------------------------------------*\
- |*		Public			*|
- \*-------------------------------------*/
-HeaterMOO::HeaterMOO ( const unsigned int width, const unsigned int height, const float k, const unsigned int blindItr )
-    : ImageMOOs ( width, height ), _k ( k ), _blindItr ( blindItr ), _imgHeater ( 0 ), _imgInit ( 0 ), _imgA ( 0 ), _imgB (
-        0 ) {
+HeaterMOO::HeaterMOO ( const uint32_t width, const uint32_t height, const float k, const uint32_t blindItr )
+    : ImageMOOs ( width, height ), _k ( k ), _blindItr ( blindItr ), _imgHeater ( 0 ), _imgInit ( 0 ), _imgA ( 0 ), _imgB ( 0 ) {
   initImages ();
 }
 
@@ -29,7 +18,7 @@ HeaterMOO::~HeaterMOO () {
   free ( _imgB, w );
 }
 
-void HeaterMOO::addHeater( const unsigned int x, const unsigned int y, const HEATER_TYPE type ) {
+void HeaterMOO::addHeater ( const uint32_t x, const uint32_t y, const HEATER_TYPE type ) {
   double temperature = 0.0;
   switch ( type ) {
   case HEATER:
@@ -58,9 +47,7 @@ void HeaterMOO::animationStep ( bool& isNeedUpdateView ) {
   // A devient B, B devient A
   // tester a chaque fois isNeedUpdateView pour faire en sorte qu'il update une fois sur blindItr!
 }
-/*--------------------------------------*\
- |*		Private			*|
- \*-------------------------------------*/
+
 void HeaterMOO::initImages () {
   int h = getH ();
   int w = getW ();
@@ -73,8 +60,8 @@ void HeaterMOO::initImages () {
   init ( _imgA, w, h, .0 );
   init ( _imgB, w, h, .0 );
   //_imgHeater[w / 2][h / 2] = 1.0;   // TODO: Faire une initialisation du heater propre!
-  for ( int i = (w / 2) - GRID_HEATER; i < (w / 2) + GRID_HEATER; i += SPACE_HEATER ) {
-    for ( int j = (w / 2) - GRID_HEATER; j < (w / 2) + GRID_HEATER; j += SPACE_HEATER ) {
+  for ( int i = ( w / 2 ) - GRID_HEATER; i < ( w / 2 ) + GRID_HEATER; i += SPACE_HEATER ) {
+    for ( int j = ( w / 2 ) - GRID_HEATER; j < ( w / 2 ) + GRID_HEATER; j += SPACE_HEATER ) {
       _imgHeater[i][j] = 1.0;
     }
   }
@@ -86,11 +73,11 @@ void HeaterMOO::initImages () {
 }
 
 void HeaterMOO::fillImage ( double** img ) {
-  int h = getH ();
-  int w = getW ();
+  uint32_t h = getH ();
+  uint32_t w = getW ();
   Calibreurs calibreur ( 0, 1, 0.7, 0 );
-  for ( int i = 1; i <= w; i++ ) {
-    for ( int j = 1; j <= h; j++ ) {
+  for ( size_t i = 1; i <= w; i++ ) {
+    for ( size_t j = 1; j <= h; j++ ) {
       double temperature = img[i - 1][j - 1];
       float hue = calibreur.calibrate ( temperature );
       setHue ( i, j, hue );
@@ -99,10 +86,10 @@ void HeaterMOO::fillImage ( double** img ) {
 }
 
 void HeaterMOO::erase ( double** src, double** dest ) {
-  int h = getH ();
-  int w = getW ();
-  for ( int i = 0; i < w; i++ ) {
-    for ( int j = 0; j < h; j++ ) {
+  uint32_t h = getH ();
+  uint32_t w = getW ();
+  for ( size_t i = 0; i < w; i++ ) {
+    for ( size_t j = 0; j < h; j++ ) {
       if ( src[i][j] != .0 ) {
         dest[i][j] = src[i][j];
       }
@@ -112,10 +99,10 @@ void HeaterMOO::erase ( double** src, double** dest ) {
 
 void HeaterMOO::diffuse ( double** src, double** dest ) {
   // modèle 1: check les bounds
-  int h = getH ();
-  int w = getW ();
-  for ( int i = 0; i < w; i++ ) {
-    for ( int j = 0; j < h; j++ ) {
+  uint32_t h = getH ();
+  uint32_t w = getW ();
+  for ( size_t i = 0; i < w; i++ ) {
+    for ( size_t j = 0; j < h; j++ ) {
       double old = src[i][j];
       double neighbours = sumNeighbours ( src, i, j );
       dest[i][j] = old + _k * ( neighbours - ( 4 * old ) );
@@ -123,27 +110,19 @@ void HeaterMOO::diffuse ( double** src, double** dest ) {
   }
 }
 
-double HeaterMOO::sumNeighbours ( double** img, const unsigned int i, const unsigned int j ) const {
+double HeaterMOO::sumNeighbours ( double** img, const uint32_t i, const uint32_t j ) const {
   double sum = .0;
-  if ( inBounds ( i, j - 1 ) ) sum += img[i][j - 1];
-  if ( inBounds ( i, j + 1 ) ) sum += img[i][j + 1];
-  if ( inBounds ( i - 1, j ) ) sum += img[i - 1][j];
-  if ( inBounds ( i + 1, j ) ) sum += img[i + 1][j];
+  if ( inBounds ( i, j - 1 ) ) {
+    sum += img[i][j - 1];
+  }
+  if ( inBounds ( i, j + 1 ) ) {
+    sum += img[i][j + 1];
+  }
+  if ( inBounds ( i - 1, j ) ) {
+    sum += img[i - 1][j];
+  }
+  if ( inBounds ( i + 1, j ) ) {
+    sum += img[i + 1][j];
+  }
   return sum;
 }
-/*----------------------------------------------------------------------*\
- |*			Implementation 					*|
- \*---------------------------------------------------------------------*/
-
-/*--------------------------------------*\
- |*		Public			*|
- \*-------------------------------------*/
-
-/*--------------------------------------*\
- |*		Private			*|
- \*-------------------------------------*/
-
-/*----------------------------------------------------------------------*\
- |*			End	 					*|
- \*---------------------------------------------------------------------*/
-
