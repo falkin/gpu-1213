@@ -3,7 +3,7 @@
 #include "Sphere.h"
 #include <stdio.h>
 
-#define MAX_SPHERE 2700
+
 
 __constant__ Sphere ARRAY_DATA[MAX_SPHERE];
 
@@ -64,22 +64,22 @@ __global__ void kernelFillImageRayGlobal ( uchar4* ptrDevImageGL, int w, int h, 
   }
 }
 
-void launchKernelFillImageRay ( uchar4* ptrDevImageGL, int w, int h, float t, Sphere* ptrHostSphereArray, Sphere* ptrDevSphereArray,
-    int nbSphere, MemType memType ) {
-  dim3 dg = dim3 ( 16, 1, 1 );
-  dim3 db = dim3 ( 32, 1, 1 );
-  switch ( memType ) {
-  case GLOBAL:
-    kernelFillImageRayGlobal<<<dg, db>>>(ptrDevImageGL, w, h, t, ptrDevSphereArray, nbSphere);
-    break;
-  case SHARED: {
-    int nbByte = nbSphere * sizeof(Sphere);
-    kernelFillImageRayShared<<<dg, db, nbByte>>>(ptrDevImageGL, w, h, t, ptrDevSphereArray, nbSphere);
-    break;
-  }
-  case CONSTANT:
-    kernelFillImageRayConstant<<<dg, db>>>(ptrDevImageGL, w, h, t, nbSphere);
-    break;
-  }
-
+void launchKernelFillImageRay(uchar4* ptrDevImageGL, int w, int h, float t, Sphere* ptrHostSphereArray, Sphere* ptrDevSphereArray, int nbSphere,
+	MemType memType, dim3 dg, dim3 db)
+    {
+    switch (memType)
+	{
+	case GLOBAL:
+	    kernelFillImageRayGlobal<<<dg, db>>>(ptrDevImageGL, w, h, t, ptrDevSphereArray, nbSphere);
+	    break;
+	case SHARED:
+	    {
+	    int nbByte = nbSphere * sizeof(Sphere);
+	    kernelFillImageRayShared<<<dg, db, nbByte>>>(ptrDevImageGL, w, h, t, ptrDevSphereArray, nbSphere);
+	    break;
+	    }
+	case CONSTANT:
+	    kernelFillImageRayConstant<<<dg, db>>>(ptrDevImageGL, w, h, t, nbSphere);
+	    break;
+	}
 }
