@@ -12,14 +12,13 @@
  |*		Public			*|
  \*-------------------------------------*/
 
-RayTracingImageCudaMOO::RayTracingImageCudaMOO(unsigned int w, unsigned int h, float tStart, float dt, int nbSphere) :
-	ImageMOOs(w, h), t(tStart), dt(dt), nbSphere(nbSphere)
+RayTracingImageCudaMOO::RayTracingImageCudaMOO(unsigned int w, unsigned int h, float tStart, float dt, int nbSphere, int numThreads) :
+	ImageMOOs(w, h), t(tStart), dt(dt), nbSphere(nbSphere), numThreads(numThreads)
     {
 
     srand(time(NULL));
 
     ptrHostSphereArray = new Sphere[nbSphere];
-    printf("blu %i",nbSphere);
 
     float3 centre;
     int radius;
@@ -35,7 +34,6 @@ RayTracingImageCudaMOO::RayTracingImageCudaMOO(unsigned int w, unsigned int h, f
 	ptrHostSphereArray[i] = *(new Sphere(centre, radius, hue));
 	}
     size_t arraySize = nbSphere * sizeof(Sphere);
-    fillImageGL();
     }
 
 RayTracingImageCudaMOO::~RayTracingImageCudaMOO()
@@ -58,11 +56,10 @@ void RayTracingImageCudaMOO::fillImageGL()
     int w = getW();
     int h = getH();
 
-    int i,j;
-#pragma omp parallel for private(i,j)
-    for ( i = 1; i <= h; i++)
+#pragma omp parallel for num_threads(numThreads)
+    for (int i = 1; i <= h; i++)
 	{
-	for ( j = 1; j <= w; j++)
+	for (int j = 1; j <= w; j++)
 	    {
 	    setPixel(i, j, t);
 	    }

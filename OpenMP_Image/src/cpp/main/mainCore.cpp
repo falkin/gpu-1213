@@ -2,14 +2,13 @@
 #include <iostream>
 #include "Chronos.h"
 #include "ImageViewers.h"
-//#include "MouseEventImageViewers.h"
 #include "RipplingMOO.h"
 #include "02_Mandelbrot.h"
 #include "03_Julia.h"
 #include "HeaterMOO.h"
 #include "MouseEventImageViewers.h"
 #include "RayTracingImageCuda.h"
-//#include "HeaterMOO.h"
+
 using std::cout;
 using std::endl;
 

@@ -6,19 +6,18 @@
  |*			Declaration 					*|
  \*---------------------------------------------------------------------*/
 extern void launchKernelFillImageRay(uchar4* ptrDevImageGL, int w, int h, float t, Sphere* ptrHostSphereArray, Sphere* ptrDevSphereArray, int nbSphere,
-	MemType memType);
+	MemType memType, dim3 dg, dim3 db);
 /*--------------------------------------*\
  |*		Public			*|
  \*-------------------------------------*/
 
-RayTracingImageCudaMOO::RayTracingImageCudaMOO(unsigned int w, unsigned int h, float tStart, float dt, int nbSphere) :
-	ImageCudaMOOs_A(w, h), t(tStart), dt(dt), nbSphere(nbSphere)
+RayTracingImageCudaMOO::RayTracingImageCudaMOO(unsigned int w, unsigned int h, float tStart, float dt, int nbSphere, MemType memType, dim3 dg, dim3 db) :
+	ImageCudaMOOs_A(w, h), t(tStart), dt(dt), nbSphere(nbSphere), memType(memType), dg(dg), db(db)
     {
 
     srand (time(NULL));
 
 ptrHostSphereArray    = new Sphere[nbSphere];
-    memType=SHARED;
 
     float3 centre;
     int radius;
@@ -65,8 +64,7 @@ void RayTracingImageCudaMOO::animationStep(bool& isNeedUpdateView)
 
 void RayTracingImageCudaMOO::fillImageGL(uchar4* ptrDevImageGL, int w, int h)
     {
-
-    launchKernelFillImageRay(ptrDevImageGL, w, h, t, ptrHostSphereArray, ptrDevSphereArray, nbSphere, memType);
+    launchKernelFillImageRay(ptrDevImageGL, w, h, t, ptrHostSphereArray, ptrDevSphereArray, nbSphere, memType,dg,db);
     }
 
 /*----------------------------------------------------------------------*\

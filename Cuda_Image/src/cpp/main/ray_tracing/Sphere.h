@@ -2,6 +2,8 @@
 #define SPHERE_H_
 
 #include "cudaTools.h"
+
+#define MAX_SPHERE 2700
 /*----------------------------------------------------------------------*\
  |*			Declaration 					*|
  \*---------------------------------------------------------------------*/
@@ -12,9 +14,10 @@
 
 enum MemType
     {
-    GLOBAL,
-    SHARED,
-    CONSTANT,
+    GLOBAL=0,
+    SHARED=1,
+    CONSTANT=2,
+    NBMEMTYPE=3,
     };
 
 class Sphere

@@ -110,42 +110,42 @@ bool useRayTracingMeasure(void)
     dim3 db = dim3(32, 1, 1);
 
     for (int d = 2000; d < maxDimension; d += 1000)
-  {
-  size_t sizeImageOctet = d * d * sizeof(uchar4);
-  unsigned char* ptrHostImage = new unsigned char[sizeImageOctet];
+	{
+	size_t sizeImageOctet = d * d * sizeof(uchar4);
+	unsigned char* ptrHostImage = new unsigned char[sizeImageOctet];
 
-  uchar4* ptrDevImage = NULL;
-  HANDLE_ERROR(cudaMalloc((void**) &ptrDevImage, sizeImageOctet));
+	uchar4* ptrDevImage = NULL;
+	HANDLE_ERROR(cudaMalloc((void**) &ptrDevImage, sizeImageOctet));
 
-  for (int nbSphere = 100; nbSphere < MAX_SPHERE; nbSphere += 500)
-      {
-      for (int memType = 0; memType < NBMEMTYPE; memType++)
-    {
-    for (int i = 0; i < nbMeasures; i++)
-        {
-        cout << memType << ",";
-        cout << d << ",";
-        cout << nbSphere << ",";
-        initChrono.start();
-        RayTracingImageCudaMOO image(d, d, 0, 0.005, 100, (MemType) memType, dg, db);
-        HANDLE_ERROR(cudaDeviceSynchronize());
-        initChrono.stop();
-        cout << initChrono.stop() << ",";
+	for (int nbSphere = 100; nbSphere < MAX_SPHERE; nbSphere += 500)
+	    {
+	    for (int memType = 0; memType < NBMEMTYPE; memType++)
+		{
+		for (int i = 0; i < nbMeasures; i++)
+		    {
+		    cout << memType << ",";
+		    cout << d << ",";
+		    cout << nbSphere << ",";
+		    initChrono.start();
+		    RayTracingImageCudaMOO image(d, d, 0, 0.005, 100, (MemType) memType, dg, db);
+		    HANDLE_ERROR(cudaDeviceSynchronize());
+		    initChrono.stop();
+		    cout << initChrono.stop() << ",";
 
-        kernelChrono.start();
-        image.fillImageGL(ptrDevImage, d, d);
-        HANDLE_ERROR(cudaDeviceSynchronize());
-        cout << kernelChrono.stop() << ",";
+		    kernelChrono.start();
+		    image.fillImageGL(ptrDevImage, d, d);
+		    HANDLE_ERROR(cudaDeviceSynchronize());
+		    cout << kernelChrono.stop() << ",";
 
-        getDataChrono.start();
-        HANDLE_ERROR(cudaMemcpy(ptrHostImage, ptrDevImage, sizeImageOctet, cudaMemcpyDeviceToHost));
-        HANDLE_ERROR(cudaDeviceSynchronize());
-        cout << getDataChrono.stop() << endl;
-        }
-    }
-      }
-  HANDLE_ERROR(cudaFree(ptrDevImage));
-  }
+		    getDataChrono.start();
+		    HANDLE_ERROR(cudaMemcpy(ptrHostImage, ptrDevImage, sizeImageOctet, cudaMemcpyDeviceToHost));
+		    HANDLE_ERROR(cudaDeviceSynchronize());
+		    cout << getDataChrono.stop() << endl;
+		    }
+		}
+	    }
+	HANDLE_ERROR(cudaFree(ptrDevImage));
+	}
     return true;
     }
 
