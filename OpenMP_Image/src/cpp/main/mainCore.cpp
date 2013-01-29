@@ -36,6 +36,7 @@ static bool useMandelbrot(void);
 static bool useJulia(void);
 static bool useHeater(void);
 static bool useRayTracing(void);
+static bool demoAll(void);
 
 /*----------------------------------------------------------------------*\
  |*         Implementation                  *|
@@ -57,7 +58,8 @@ int mainCore(void)
     //isOk &= useMandelbrot();
     //isOk &= useJulia ();
     //isOk &= useHeater();
-    isOk &= useRayTracing();
+    //isOk &= useRayTracing();
+    isOk &= demoAll();
 
     cout << "\n-------------------------------------------------" << endl;
     cout << "End Main : isOk = " << isOk << endl;
@@ -146,5 +148,26 @@ bool useHeater ( void ) {
   //ImageViewers viewer ( &heater, true );
   //viewer.run();
   ImageViewers::runALL ();
+  return true;
+}
+
+bool demoAll(void) {
+  int width = 300;
+  int height = width;
+
+  RipplingMOO rippling ( width, height, 0, 0.5 );
+  RayTracingImageCudaMOO rayTracing ( width, height, 0, 0.005, 20 );
+  Mandelbrot mandel ( width, height, DomaineMaths ( -2.1f, -1.3f, 0.8f, 1.3f ), 80 );
+  Julia julia ( width, height, DomaineMaths ( -1.3f, -1.4f, 1.3f, 1.4f ), 80, -0.12f, 0.85f );
+  HeaterMOO heater ( width, heigth, 0.1f, 1 );
+
+  ImageViewers imageViewerRippling ( &rippling, true, false, 0, 0 );
+  ImageViewers imageViewerRayTracing ( &rayTracing, true, false, width, 0 );
+  ImageViewers imageViewerMandelbrot ( &mandel, true, false, 0, width );
+  ImageViewers imageViewerJulia ( &julia, true, false, width, width );
+  MouseEventImageViewers imageViewerHeater ( &heater, true, false, 2*width, 0 );
+
+  ImageViewers::runALL ();
+
   return true;
 }

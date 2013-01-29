@@ -16,7 +16,7 @@ typedef unsigned int Point;
 
 class Mandelbrot: public ImageFonctionelMOOs_A {
 public:
-  Mandelbrot ( const Dim w, const Dim h, const DomaineMaths& domaine, const int n );
+  Mandelbrot ( const Dim w, const Dim h, const DomaineMaths& domaine, const int n, const bool omp = false );
   virtual ~Mandelbrot () {
   }
 protected:
@@ -25,6 +25,7 @@ private:
   void setPixel ( const Point i, const Point j, const DomaineMaths& domaine );
 
   int n;
+  bool _omp;
 };
 
 #endif 

@@ -1,13 +1,14 @@
 #include "02_Mandelbrot.h"
 
-Mandelbrot::Mandelbrot ( const Dim w, const Dim h, const DomaineMaths& domaine, const int n )
-    : ImageFonctionelMOOs_A ( w, h, domaine ), n ( n ) {
+Mandelbrot::Mandelbrot ( const Dim w, const Dim h, const DomaineMaths& domaine, const int n, const bool omp )
+    : ImageFonctionelMOOs_A ( w, h, domaine ), n ( n ), _omp ( omp ) {
   fillImage ( domaine );
 }
 
 void Mandelbrot::fillImage ( const DomaineMaths& domaine ) {
   Dim h = getH ();
   Dim w = getW ();
+#pragma omp parallel for if ( _omp )
   for ( int i = 1; i <= h; i++ ) {
     for ( int j = 1; j <= w; j++ ) {
       setPixel ( i, j, domaine );
