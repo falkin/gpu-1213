@@ -5,8 +5,8 @@
 
 #define SPACE_HEATER 10
 #define GRID_HEATER 50
-HeaterMOO::HeaterMOO ( const uint32_t width, const uint32_t height, const float k, const uint32_t blindItr )
-    : ImageMOOs ( width, height ), _k ( k ), _blindItr ( blindItr ), _imgHeater ( 0 ), _imgInit ( 0 ), _imgA ( 0 ), _imgB ( 0 ) {
+HeaterMOO::HeaterMOO ( const uint32_t width, const uint32_t height, const float k, const uint32_t blindItr, const bool omp )
+    : ImageMOOs ( width, height ), _k ( k ), _blindItr ( blindItr ), _omp ( omp ), _imgHeater ( 0 ), _imgInit ( 0 ), _imgA ( 0 ), _imgB ( 0 ) {
   initImages ();
 }
 
@@ -76,6 +76,7 @@ void HeaterMOO::fillImage ( double** img ) {
   uint32_t h = getH ();
   uint32_t w = getW ();
   Calibreurs calibreur ( 0, 1, 0.7, 0 );
+#pragma omp parallel for if ( _omp )
   for ( size_t i = 1; i <= w; i++ ) {
     for ( size_t j = 1; j <= h; j++ ) {
       double temperature = img[i - 1][j - 1];
@@ -88,6 +89,7 @@ void HeaterMOO::fillImage ( double** img ) {
 void HeaterMOO::erase ( double** src, double** dest ) {
   uint32_t h = getH ();
   uint32_t w = getW ();
+#pragma omp parallel for if ( _omp )
   for ( size_t i = 0; i < w; i++ ) {
     for ( size_t j = 0; j < h; j++ ) {
       if ( src[i][j] != .0 ) {
@@ -101,6 +103,7 @@ void HeaterMOO::diffuse ( double** src, double** dest ) {
   // modèle 1: check les bounds
   uint32_t h = getH ();
   uint32_t w = getW ();
+#pragma omp parallel for if ( _omp )
   for ( size_t i = 0; i < w; i++ ) {
     for ( size_t j = 0; j < h; j++ ) {
       double old = src[i][j];

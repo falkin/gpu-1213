@@ -9,7 +9,7 @@ enum HEATER_TYPE {
 
 class HeaterMOO: public ImageMOOs {
 public:
-  HeaterMOO ( const uint32_t width, const uint32_t height, const float k, const uint32_t blindItr );
+  HeaterMOO ( const uint32_t width, const uint32_t height, const float k, const uint32_t blindItr, const bool omp = false );
   virtual ~HeaterMOO ();
   void animationStep ( bool& isNeedUpdateView );
   void addHeater ( const uint32_t x, const uint32_t y, const HEATER_TYPE type );
@@ -24,6 +24,7 @@ private:
   }
   float _k;
   uint32_t _blindItr;
+  bool _omp;
   double** _imgHeater;
   double** _imgInit;
   double** _imgA;
