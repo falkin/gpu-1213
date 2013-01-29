@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "CaptureVideoDMA.h"
 #include "CaptureVideo.h"
 #include "CaptureCamera.h"
 #include "Capture_A.h"
@@ -50,7 +51,9 @@ bool useVideo ( void ) {
   string videoName = "/home/studentmse9/hearc/cuda/data/nasaFHD.avi";
   string title = "Tuto Video";
 
-  CaptureVideo captureur ( videoName, title );
+  //CaptureVideo captureur ( videoName, title );
+  CaptureVideoDMA captureur ( videoName, title );
+  captureur.printInfo ();
 
   if ( captureur.isOpened () ) {
     show ( &captureur );

@@ -65,7 +65,27 @@ Mat Capture_A::capturer ( void ) {
     //printInfo();
   }
 
-  cvtColor ( matCaptureSrc, matCaptureDest, CV_8U, 4 ); //CV_8U CV_RGB2GRAY // 0 keep same chanel // 4 permet par exemple d'ajouter la couche alpha � rvb (pour une video ou webcam)
+  cvtColor ( matCaptureSrc, matCaptureDest, CV_8U, 4 ); //CV_8U CV_RGB2GRAY // 0 keep same chanel // 4 permet par exemple d'ajouter la couche alpha ��� rvb (pour une video ou webcam)
+
+  return matCaptureDest; //castToUChar4(matCapture.data);
+}
+
+Mat Capture_A::capturerUChar3 ( void ) {
+  if ( compteurCapture == 0 ) {
+    Chronos chrono;
+    this->chrono = chrono;
+  }
+
+  compteurCapture++;
+
+  ( *ptrCaptureStream ) >> matCaptureSrc;
+
+  // debug
+  {
+    //printInfo();
+  }
+
+  //cvtColor ( matCaptureSrc, matCaptureDest, CV_8U, 4 ); //CV_8U CV_RGB2GRAY // 0 keep same chanel // 4 permet par exemple d'ajouter la couche alpha \ufffd\ufffd\ufffd rvb (pour une video ou webcam)
 
   return matCaptureDest; //castToUChar4(matCapture.data);
 }
@@ -76,6 +96,7 @@ void Capture_A::printInfo ( void ) {
   cout << "\ttitle     = " << title << endl;
   cout << "\tnbChannel = " << matCaptureSrc.channels () << endl;
   cout << "\ttype      = " << matCaptureSrc.type () << endl;
+  cout << "\tdepth     = " << matCaptureSrc.depth() << endl;
   cout << "\tisEmpty   = " << matCaptureSrc.empty () << endl;
   cout << "\tdtMS      = " << dtMS () << endl;
   cout << "\tfps       = " << fps () << endl;
@@ -212,7 +233,7 @@ uchar4* Capture_A::castToUChar4 ( Mat* ptrMap ) {
 // CV_16U : [0,65535]
 // CV_32F : [0,1] in R
 //cvtColor(matCapture, matCapture, CV_8U,0); // 0 keep same chanel
-//  cvtColor(matCapture, matCapture, CV_8U,4); // 0 keep same chanel // 4 permet par exemple d'ajouter la couche alpha � rvb (pour une video ou webcam)
+//  cvtColor(matCapture, matCapture, CV_8U,4); // 0 keep same chanel // 4 permet par exemple d'ajouter la couche alpha ��� rvb (pour une video ou webcam)
 /*----------------------------------------------------------------------*\
  |*			End	 					*|
  \*---------------------------------------------------------------------*/

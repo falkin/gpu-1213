@@ -58,10 +58,17 @@ public:
    * To be call periodicly to obtain image
    */
   virtual Mat capturer ( void );
+  virtual Mat capturerUChar3 ( void );
 
   // Tools
   static uchar4* castToUChar4 ( uchar* ptrTab );
-  static uchar4* castToUChar4 ( Mat* ptrMap );
+  static uchar4* castToUChar4 ( Mat* ptrMat );
+  static inline uchar3* castToUChar3 ( uchar* ptrTab ) {
+    return (uchar3*) ptrTab;
+  }
+  static inline uchar3* castToUChar3 ( Mat* ptrMat ) {
+    return (uchar3*) ptrMat->data;
+  }
 
 protected:
 

@@ -41,6 +41,7 @@ public:
 
 public:
   Mat capturer ( void );
+  Mat capturerUChar3 ( void );
 
   /**
    * Temps a attendre entre 2 captures pour respecter fps original

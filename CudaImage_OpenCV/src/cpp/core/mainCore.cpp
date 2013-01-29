@@ -4,21 +4,28 @@
 #include "Device.h"
 #include "cudaTools.h"
 #include "KernelFilterImageCudaViewer.h"
+#include "KernelFilterCPPMOO.h"
 #include "ImageCudaViewers.h"
+#include "ImageViewers.h"
+#include "PinnedVSUnpinned.h"
 
 using std::cout;
 using std::endl;
 
 int mainCore ();
 
-static bool useKernelFilter ( void );
+static bool useKernelFilterCUDA ( void );
+static bool useKernelFilterCPP ( void );
+static bool usePinnedVSUnpinned ( void );
 
 /**
  *
  */
 int mainCore () {
   bool isOk = true;
-  isOk &= useKernelFilter ();
+  //isOk &= useKernelFilterCUDA ();
+  //isOk &= useKernelFilterCPP ();
+  isOk &= usePinnedVSUnpinned ();
 
   cout << "\nisOK = " << isOk << endl;
   cout << "\nEnd : mainCore" << endl;
@@ -49,7 +56,7 @@ void createKernel ( float** kernel, size_t* size ) {
 /**
  *
  */
-bool useKernelFilter ( void ) {
+bool useKernelFilterCUDA ( void ) {
   int deviceId = 0;
   HANDLE_ERROR( cudaSetDevice ( deviceId ) );
   HANDLE_ERROR( cudaGLSetGLDevice ( deviceId ) );
@@ -60,5 +67,41 @@ bool useKernelFilter ( void ) {
       kernelSize );
   ImageCudaViewers viewer ( &kernel );
   ImageCudaViewers::runALL ();
+  return true;
+}
+
+/**
+ *
+ */
+bool useKernelFilterCPP ( void ) {
+  float* kernelEdge;
+  size_t kernelSize;
+  createKernel ( &kernelEdge, &kernelSize );
+  KernelFilterCPPMOO kernel ( 1920, 1080, std::string ( "/home/studentmse9/hearc/cuda/data/nasaFHD.avi" ), kernelEdge, kernelSize );
+  ImageViewers viewer ( &kernel, true );
+  ImageViewers::runALL ();
+  return true;
+}
+
+#define PINNED_VS_UNPINNED 1000
+
+/**
+ *
+ */
+bool usePinnedVSUnpinned ( void ) {
+  int deviceId = 0;
+  HANDLE_ERROR( cudaSetDevice ( deviceId ) );
+  HANDLE_ERROR( cudaGLSetGLDevice ( deviceId ) );
+  std::string file ( "/home/studentmse9/hearc/cuda/data/nasaFHD.avi" );
+  PinnedVSUnpinned pinned ( 1920, 1080, file, PINNED );
+  cout << "Pinned:" << endl;
+  for ( size_t i = 0; i < PINNED_VS_UNPINNED; i++ ) {
+    cout << pinned.transfert () << endl;
+  }
+  cout << endl << "Unpinned:" << endl;
+  PinnedVSUnpinned unpinned ( 1920, 1080, file, UNPINNED );
+  for ( size_t i = 0; i < PINNED_VS_UNPINNED; i++ ) {
+    cout << unpinned.transfert () << endl;
+  }
   return true;
 }

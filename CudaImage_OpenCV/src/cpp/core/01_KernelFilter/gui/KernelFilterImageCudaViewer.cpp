@@ -11,7 +11,7 @@ extern void launchKernelFillImageKernel ( uchar4* ptrDevImageGL, const uchar4* p
  */
 KernelFilterImageCudaViewer::KernelFilterImageCudaViewer ( const uint32_t w, const uint32_t h, const std::string filename,
     const float* kernel, const size_t kernelSize )
-    : ImageCudaMOOs_A ( w, h ), _capture ( filename, std::string ( "Kernel" ) ), _kernel ( kernel ), _kernelSize( kernelSize ) {
+    : ImageCudaMOOs_A ( w, h ), _capture ( filename, std::string ( "Kernel CUDA" ) ), _kernel ( kernel ), _kernelSize( kernelSize ) {
   std::cout << "Constructed KernelFilterImageCudaViewer" << std::endl;
   _capture.printInfo ();
   initKernelFillImage ( w, h, _kernel, _kernelSize );
