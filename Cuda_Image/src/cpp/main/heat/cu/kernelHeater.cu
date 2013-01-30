@@ -198,7 +198,7 @@ void initKernelHeatDispersion ( const uint32_t w, const uint32_t h, const float 
   // Init heaters, middle filled with 0, corners squares filled with 0.5
   size_t bigSquare = w / 10;
   size_t smallSquare = w / 20;
-  kernelHeatInitHeaters<<< db, dg >>> ( ptrDevHeater, w, h, 1.0, 0.5, bigSquare, smallSquare );
+  kernelHeatInitHeaters<<< db, dg >>> ( ptrDevHeater, w, h, 1.0, 0.2, bigSquare, smallSquare );
 
   // last part of initialization, Erase -> Diffuse -> Erase
   kernelHeatErase<<< dg, db >>> ( ptrDevHeater, ptrDevIniter, w, h );

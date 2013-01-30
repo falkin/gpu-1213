@@ -3,9 +3,8 @@
 #include "cudaTools.h"
 #include "Chronos.h"
 
-double launchKernelMemoryTransfert ( const uint32_t w, const uint32_t h, const void* memory, const size_t memory_size ) {
+double launchKernelMemoryTransfert ( const void* memory, const size_t size ) {
   Chronos chrono;
-  size_t size = w * h * memory_size;
   void* ptrDevMemory;
   chrono.start ();
   HANDLE_ERROR( cudaMalloc( &ptrDevMemory, size ) );

@@ -56,12 +56,12 @@ bool demoAll ( void ) {
   RayTracingImageCudaMOO rayTracing ( width, height, 0, 0.005, 20 );
   Mandelbrot mandel ( width, height, DomaineMaths ( -2.1f, -1.3f, 0.8f, 1.3f ), 80 );
   Julia julia ( width, height, DomaineMaths ( -1.3f, -1.4f, 1.3f, 1.4f ), 80, -0.12f, 0.85f );
-  HeaterImageCuda heater ( width, heigth, 0.1f, 1 );
+  HeaterImageCuda heater ( width, height, 0.1f, 1 );
 
   ImageCudaViewers imageViewerRippling ( &rippling, true, false, 0, 0 );
   ImageCudaViewers imageViewerRayTracing ( &rayTracing, true, false, width, 0 );
-  ImageCudaViewers imageViewerMandelbrot ( &mandel, true, false, 0, width );
-  ImageCudaViewers imageViewerJulia ( &julia, true, false, width, width );
+  ImageCudaViewers imageViewerMandelbrot ( &mandel, true, true, 0, width + 50 );
+  ImageCudaViewers imageViewerJulia ( &julia, true, true, width, width + 50 );
   ImageCudaViewers imageViewerHeater ( &heater, true, false, 2*width, 0 );
 
   ImageCudaViewers::runALL ();

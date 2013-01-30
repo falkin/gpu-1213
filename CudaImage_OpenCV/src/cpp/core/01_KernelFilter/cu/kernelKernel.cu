@@ -1,9 +1,10 @@
 #include "Indice2D.h"
 #include "cuda_runtime.h"
 #include "cudaTools.h"
+#include "KernelFilterImpl.h"
+#include "Chronos.h"
 #include <iostream>
 
-// TODO: Check DMA memory from capture
 /*--------------------------------------*\
  |*   UTILS                             *|
  \*-------------------------------------*/
@@ -51,7 +52,8 @@ __device__ void minOrMax3 ( const uint8_t r, const uint8_t g, const uint8_t b, c
 /*--------------------------------------*\
  |*   GPU Globals                       *|
  \*-------------------------------------*/
-texture<uint8_t, 2, cudaReadModeElementType> texBWImage;
+texture<uchar4, 2, cudaReadModeElementType> texBWImage;
+__constant__ float k_KERNEL[81];
 
 /**
  * Computes Grayscale image from RGB image.
@@ -65,7 +67,7 @@ texture<uint8_t, 2, cudaReadModeElementType> texBWImage;
  * @param h height of the image
  * @param ptrDevBWImage black&white image computed
  */
-__global__ void kernelRGBImageToBW_Lightness ( const uchar4* ptrDevRGBImage, const uint32_t w, const uint32_t h, uint8_t* ptrDevBWImage ) {
+__global__ void kernelRGBImageToBW_Lightness ( const uchar4* ptrDevRGBImage, const uint32_t w, const uint32_t h, uchar4* ptrDevBWImage ) {
   int tid = Indice2D::tid ();
   int nbThreads = Indice2D::nbThread ();
   int s = tid;
@@ -75,7 +77,7 @@ __global__ void kernelRGBImageToBW_Lightness ( const uchar4* ptrDevRGBImage, con
     minOrMax3 ( ptrDevRGBImage[s].x, ptrDevRGBImage[s].y, ptrDevRGBImage[s].z, max, &maxresult );
     minOrMax3 ( ptrDevRGBImage[s].x, ptrDevRGBImage[s].y, ptrDevRGBImage[s].z, min, &minresult );
     uint8_t gray = ( maxresult + minresult ) / 2;
-    ptrDevBWImage[s] = gray;
+    ptrDevBWImage[s].x = ptrDevBWImage[s].y = ptrDevBWImage[s].z = ptrDevBWImage[s].w = gray;
     s += nbThreads;
   }
 }
@@ -92,14 +94,14 @@ __global__ void kernelRGBImageToBW_Lightness ( const uchar4* ptrDevRGBImage, con
  * @param h height of the image
  * @param ptrDevBWImage black&white image computed
  */
-__global__ void kernelRGBImageToBW_Average ( const uchar4* ptrDevRGBImage, const uint32_t w, const uint32_t h, uint8_t* ptrDevBWImage ) {
+__global__ void kernelRGBImageToBW_Average ( const uchar4* ptrDevRGBImage, const uint32_t w, const uint32_t h, uchar4* ptrDevBWImage ) {
   int tid = Indice2D::tid ();
   int nbThreads = Indice2D::nbThread ();
   int s = tid;
   size_t size = h * w;
   while ( s < size ) {
     uint8_t gray = ( ptrDevRGBImage[s].x + ptrDevRGBImage[s].y + ptrDevRGBImage[s].z ) / 3;
-    ptrDevBWImage[s] = gray;
+    ptrDevBWImage[s].x = ptrDevBWImage[s].y = ptrDevBWImage[s].z = ptrDevBWImage[s].w = gray;
     s += nbThreads;
   }
 }
@@ -116,7 +118,7 @@ __global__ void kernelRGBImageToBW_Average ( const uchar4* ptrDevRGBImage, const
  * @param h height of the image
  * @param ptrDevBWImage black&white image computed
  */
-__global__ void kernelRGBImageToBW_Luminance ( const uchar4* ptrDevRGBImage, const uint32_t w, const uint32_t h, uint8_t* ptrDevBWImage ) {
+__global__ void kernelRGBImageToBW_Luminance ( const uchar4* ptrDevRGBImage, const uint32_t w, const uint32_t h, uchar4* ptrDevBWImage ) {
   int tid = Indice2D::tid ();
   int nbThreads = Indice2D::nbThread ();
   int s = tid;
@@ -126,33 +128,13 @@ __global__ void kernelRGBImageToBW_Luminance ( const uchar4* ptrDevRGBImage, con
   const float B_FACTOR = 0.07f;
   while ( s < size ) {
     uint8_t gray = ( ptrDevRGBImage[s].x * R_FACTOR ) + ( ptrDevRGBImage[s].y * G_FACTOR ) + ( ptrDevRGBImage[s].z * B_FACTOR );
-    ptrDevBWImage[s] = gray;
+    ptrDevBWImage[s].x = ptrDevBWImage[s].y = ptrDevBWImage[s].z = ptrDevBWImage[s].w = gray;
     s += nbThreads;
   }
 }
 
 /**
- * Displays given black&white image to the OpenGL context.
- *
- * @param ptrDevBWImage black&white image resulting from convolution
- * @param w width of the image
- * @param h heigth of the image
- * @param ptrDevImageGL OpenGL context image
- */
-__global__ void kernelDisplayBWImage ( const uint8_t* ptrDevBWImage, const uint32_t w, const uint32_t h, uchar4* ptrDevImageGL ) {
-  int tid = Indice2D::tid ();
-  int nbThreads = Indice2D::nbThread ();
-  int s = tid;
-  size_t size = h * w;
-  while ( s < size ) {
-    ptrDevImageGL[s].w = 255;
-    ptrDevImageGL[s].x = ptrDevImageGL[s].y = ptrDevImageGL[s].z = ptrDevBWImage[s];
-    s += nbThreads;
-  }
-}
-
-/**
- * Convolution function using texture.
+ * Convolution function using texture for the image and global memory for the kernel.
  *
  * @param kernel the kernel used for convolution
  * @param k number of column from the kernel
@@ -161,49 +143,182 @@ __global__ void kernelDisplayBWImage ( const uint8_t* ptrDevBWImage, const uint3
  * @param i i-th position of the image
  * @param j j-th position of the image
  */
-__device__ float convolutionKernelTexture ( const float* ptrDevKernel, const uint32_t k, const uint32_t center, const uint32_t kHalf,
-    const uint32_t i, const uint32_t j ) {
-  float SE, SO, NE, NO;
-  float CH, CV;
-  for ( uint32_t u = 1; u <= kHalf; u++ ) {
-    for ( uint32_t v = 1; v <= kHalf; v++ ) {
-      SE += ptrDevKernel[( center + k * v ) + u] * tex2D ( texBWImage, i + v, j + u );
-      SO += ptrDevKernel[( center + k * v ) - u] * tex2D ( texBWImage, i + v, j - u );
-      NE += ptrDevKernel[( center - k * v ) + u] * tex2D ( texBWImage, i - v, j + u );
-      NO += ptrDevKernel[( center - k * v ) - u] * tex2D ( texBWImage, i - v, j - u );
+__device__ float convolutionKernelGlobalImageTexture ( const float* ptrDevKernel, const uint32_t k, const uint32_t center,
+    const uint32_t kHalf, const uint32_t i, const uint32_t j ) {
+  float sum = 0.0f;
+  for ( int v = 1; v <= kHalf; v++ ) {
+    for ( int u = 1; u <= kHalf; u++ ) {
+      sum += ptrDevKernel[center + ( v * k ) + u] * tex2D ( texBWImage, j + v, i + u ).x;
+      sum += ptrDevKernel[center + ( v * k ) - u] * tex2D ( texBWImage, j + v, i - u ).x;
+      sum += ptrDevKernel[center - ( v * k ) + u] * tex2D ( texBWImage, j - v, i + u ).x;
+      sum += ptrDevKernel[center - ( v * k ) - u] * tex2D ( texBWImage, j - v, i - u ).x;
     }
   }
-  for ( int u = -( kHalf ); u < ( kHalf ); u++ ) {
-    CH += ptrDevKernel[center + u] * tex2D ( texBWImage, i, j + u );
-    CV += ptrDevKernel[center + k * u] * tex2D ( texBWImage, i + u, j );
+  for ( int u = -k / 2; u < k / 2; u++ ) {
+    sum += ptrDevKernel[center + u] * tex2D ( texBWImage, j, i + u ).x;
+    sum += ptrDevKernel[center + k * u] * tex2D ( texBWImage, j + u, i ).x;
   }
-  return SE + SO + NE + NO + CH + CV - ( ptrDevKernel[center] * tex2D ( texBWImage, i, j ) );
+  sum += ( ptrDevKernel[center] * tex2D ( texBWImage, j, i ).x ); // Center computed twice
+  return sum;
 }
 
 /**
- * Kernel which compute convolution using texture.
+ * Kernel stored in global memory which compute convolution using texture mapping to the image.
  *
  * @param w width of the image
  * @param h heigth of the image
  * @param kernel kernel used for the convolution
  * @param k number of column from the kernel
- * @param
+ * @param ptrDevCudaImageConvolution the convolution result
  */
-__global__ void kernelConvolutionTexture ( const uint32_t w, const uint32_t h, const float* ptrDevKernel, const uint32_t k,
-    uchar4* ptrDevImageGL ) {
+__global__ void kernelConvolutionGlobalImageTexture ( const uint32_t w, const uint32_t h, const float* ptrDevKernel, const uint32_t k,
+    float* ptrDevCudaImageConvolution ) {
   int tid = Indice2D::tid ();
   int nbThreads = Indice2D::nbThread ();
   int s = tid;
   size_t size = h * w;
   int i, j;
   int kHalf = ( k / 2 );
-  int center = ( k * kHalf ) + kHalf;
+  int center = k * ( k / 2 ) + kHalf;
   float convolution;
   while ( s < size ) {
     Indice2D::pixelIJ ( s, w, i, j );
-    convolution = convolutionKernelTexture ( ptrDevKernel, k, center, kHalf, i, j );
+    convolution = convolutionKernelGlobalImageTexture ( ptrDevKernel, k, center, kHalf, i, j );
+    ptrDevCudaImageConvolution[s] = convolution;
+    s += nbThreads;
+  }
+}
+
+/**
+ * Convolution function using texture for the image and constant memory for the kernel.
+ *
+ * @param kernel the kernel used for convolution
+ * @param k number of column from the kernel
+ * @param center center point of the kernel
+ * @param kHalf half of the kernel column size
+ * @param i i-th position of the image
+ * @param j j-th position of the image
+ */
+__device__ float convolutionKernelConstantImageTexture ( const uint32_t k, const uint32_t center, const uint32_t kHalf, const uint32_t i,
+    const uint32_t j ) {
+  float sum = 0.0f;
+  for ( int v = 1; v <= kHalf; v++ ) {
+    for ( int u = 1; u <= kHalf; u++ ) {
+      sum += k_KERNEL[center + ( v * k ) + u] * tex2D ( texBWImage, j + v, i + u ).x;
+      sum += k_KERNEL[center + ( v * k ) - u] * tex2D ( texBWImage, j + v, i - u ).x;
+      sum += k_KERNEL[center - ( v * k ) + u] * tex2D ( texBWImage, j - v, i + u ).x;
+      sum += k_KERNEL[center - ( v * k ) - u] * tex2D ( texBWImage, j - v, i - u ).x;
+    }
+  }
+  for ( int u = -k / 2; u < k / 2; u++ ) {
+    sum += k_KERNEL[center + u] * tex2D ( texBWImage, j, i + u ).x;
+    sum += k_KERNEL[center + k * u] * tex2D ( texBWImage, j + u, i ).x;
+  }
+  sum += ( k_KERNEL[center] * tex2D ( texBWImage, j, i ).x ); // Center computed twice.
+  return sum;
+}
+
+/**
+ * Kernel stored in global memory which compute convolution using texture mapping to the image.
+ *
+ * @param w width of the image
+ * @param h heigth of the image
+ * @param kernel kernel used for the convolution
+ * @param k number of column from the kernel
+ * @param ptrDevCudaImageConvolution the convolution result
+ */
+__global__ void kernelConvolutionConstantImageTexture ( const uint32_t w, const uint32_t h, const uint32_t k,
+    float* ptrDevCudaImageConvolution ) {
+  int tid = Indice2D::tid ();
+  int nbThreads = Indice2D::nbThread ();
+  int s = tid;
+  size_t size = h * w;
+  int i, j;
+  int kHalf = ( k / 2 );
+  int center = k * ( k / 2 ) + kHalf;
+  float convolution;
+  while ( s < size ) {
+    Indice2D::pixelIJ ( s, w, i, j );
+    convolution = convolutionKernelConstantImageTexture ( k, center, kHalf, i, j );
+    ptrDevCudaImageConvolution[s] = convolution;
+    s += nbThreads;
+  }
+}
+
+/**
+ * Convolution function using texture for the image and constant memory for the kernel.
+ *
+ * @param kernel the kernel used for convolution
+ * @param k number of column from the kernel
+ * @param center center point of the kernel
+ * @param kHalf half of the kernel column size
+ * @param i i-th position of the image
+ * @param j j-th position of the image
+ */
+__device__ float convolutionKernelConstantImageTexture_mul24 ( const uint32_t k, const uint32_t center, const uint32_t kHalf,
+    const uint32_t i, const uint32_t j ) {
+  float sum = 0.0f;
+  for ( int v = 1; v <= kHalf; v++ ) {
+    for ( int u = 1; u <= kHalf; u++ ) {
+      sum += __mul24 ( k_KERNEL[center + ( v * k ) + u], tex2D ( texBWImage, j + v, i + u ).x );
+      sum += __mul24 ( k_KERNEL[center + ( v * k ) - u], tex2D ( texBWImage, j + v, i - u ).x );
+      sum += __mul24 ( k_KERNEL[center - ( v * k ) + u], tex2D ( texBWImage, j - v, i + u ).x );
+      sum += __mul24 ( k_KERNEL[center - ( v * k ) - u], tex2D ( texBWImage, j - v, i - u ).x );
+    }
+  }
+  for ( int u = -k / 2; u < k / 2; u++ ) {
+    sum += __mul24 ( k_KERNEL[center + u], tex2D ( texBWImage, j, i + u ).x );
+    sum += __mul24 ( k_KERNEL[center + k * u], tex2D ( texBWImage, j + u, i ).x );
+  }
+  sum += ( __mul24 ( k_KERNEL[center], tex2D ( texBWImage, j, i ).x ) ); // Center computed twice.
+  return sum;
+}
+
+/**
+ * Kernel stored in global memory which compute convolution using texture mapping to the image.
+ *
+ * @param w width of the image
+ * @param h heigth of the image
+ * @param kernel kernel used for the convolution
+ * @param k number of column from the kernel
+ * @param ptrDevCudaImageConvolution the convolution result
+ */
+__global__ void kernelConvolutionConstantImageTexture_mul24 ( const uint32_t w, const uint32_t h, const uint32_t k,
+    float* ptrDevCudaImageConvolution ) {
+  int tid = Indice2D::tid ();
+  int nbThreads = Indice2D::nbThread ();
+  int s = tid;
+  size_t size = h * w;
+  int i, j;
+  int kHalf = ( k / 2 );
+  int center = k * ( k / 2 ) + kHalf;
+  float convolution;
+  while ( s < size ) {
+    Indice2D::pixelIJ ( s, w, i, j );
+    convolution = convolutionKernelConstantImageTexture ( k, center, kHalf, i, j );
+    ptrDevCudaImageConvolution[s] = convolution;
+    s += nbThreads;
+  }
+}
+
+/**
+ * Displays given black&white image to the OpenGL context.
+ *
+ * @param ptrDevConvolution image resulting from convolution
+ * @param w width of the image
+ * @param h heigth of the image
+ * @param ptrDevImageGL OpenGL context image
+ */
+__global__ void kernelDisplayConvolution ( const float* ptrDevConvolution, const uint32_t w, const uint32_t h, uchar4* ptrDevImageGL ) {
+  int tid = Indice2D::tid ();
+  int nbThreads = Indice2D::nbThread ();
+  int s = tid;
+  size_t size = h * w;
+  int i, j;
+  while ( s < size ) {
+    Indice2D::pixelIJ ( s, w, i, j );
     ptrDevImageGL[s].w = 255;
-    ptrDevImageGL[s].x = ptrDevImageGL[s].y = ptrDevImageGL[s].z = (unsigned char) ( convolution + 64.0f );
+    ptrDevImageGL[s].x = ptrDevImageGL[s].y = ptrDevImageGL[s].z = (uint8_t) ( ptrDevConvolution[s] );
     s += nbThreads;
   }
 }
@@ -218,11 +333,13 @@ struct CudaImagesSizes {
   size_t rgb_size;
   size_t bw_pitch;
   size_t bw_size;
+  size_t conv_size;
   size_t kernel_size;
 };
 static uchar4* ptrDevCudaRGBImage = NULL;
-static uint8_t* ptrDevCudaBWImage = NULL;
+static uchar4* ptrDevCudaBWImage = NULL;
 static float* ptrDevKernel = NULL;
+static float* ptrDevCudaImageConvolution = NULL;
 static CudaImagesSizes sizes;
 
 /**
@@ -233,35 +350,39 @@ static CudaImagesSizes sizes;
  */
 void initKernelFillImage ( const uint32_t w, const uint32_t h, const float* kernel, const size_t kernelSize ) {
   size_t rgb_size = sizeof(uchar4) * h * w;
-  size_t bw_size = sizeof(uint8_t) * h * w;
+  size_t bw_size = sizeof(uchar4) * h * w;
+  size_t conv_size = sizeof(float) * h * w;
   sizes.w = w;
   sizes.h = h;
   sizes.rgb_pitch = sizeof(uchar4) * w;
   sizes.rgb_size = rgb_size;
-  sizes.bw_pitch = sizeof(uint8_t) * w;
+  sizes.bw_pitch = sizeof(uchar4) * w;
   sizes.bw_size = bw_size;
-  sizes.kernel_size = kernelSize;
+  sizes.conv_size = conv_size;
+  sizes.kernel_size = kernelSize * sizeof(float);
   HANDLE_ERROR( cudaMalloc((void**) &ptrDevCudaRGBImage, rgb_size) );
   HANDLE_ERROR( cudaMalloc((void**) &ptrDevCudaBWImage, bw_size ) );
-  HANDLE_ERROR( cudaMalloc((void**) &ptrDevKernel, kernelSize) );
+  HANDLE_ERROR( cudaMalloc((void**) &ptrDevCudaImageConvolution, conv_size ) );
+  HANDLE_ERROR( cudaMalloc((void**) &ptrDevKernel, sizes.kernel_size) );
 
-  // Copy kernel to global memory
+// Copy kernel to global memory
   HANDLE_ERROR( cudaMemcpy( ptrDevKernel, kernel, sizes.kernel_size, cudaMemcpyHostToDevice ) );
+  HANDLE_ERROR( cudaMemcpyToSymbol("k_KERNEL", kernel, sizes.kernel_size, 0, cudaMemcpyHostToDevice ) );
 
-  // Create tex, bind tex to ptrDevCudaBWImage
-  texBWImage.addressMode[0] = cudaAddressModeClamp;
-  texBWImage.addressMode[1] = cudaAddressModeClamp;
-  texBWImage.filterMode = cudaFilterModePoint;
+// Create tex, bind tex to ptrDevCudaBWImage
+  texBWImage.addressMode[0] = cudaAddressModeWrap;
+  texBWImage.addressMode[1] = cudaAddressModeWrap;
+  //texBWImage.filterMode = cudaFilterModePoint;
   texBWImage.normalized = false; // coordinate not in [0, 1]
-  cudaChannelFormatDesc channelDesc = cudaCreateChannelDesc<uint8_t> ();
-  HANDLE_ERROR( cudaBindTexture2D(NULL, texBWImage, ptrDevCudaBWImage, channelDesc, w, h, sizes.bw_pitch ) );
+  cudaChannelFormatDesc channelDesc = cudaCreateChannelDesc<uchar4> ();
+  HANDLE_ERROR( cudaBindTexture2D(NULL, &texBWImage, ptrDevCudaBWImage, &channelDesc, w, h, sizes.bw_pitch ) );
 }
 
 /**
  *
  */
 void freeKernelFillImageKernel () {
-
+  //HANDLE_ERROR (  );
 }
 
 /**
@@ -272,23 +393,43 @@ void freeKernelFillImageKernel () {
  * <ol>Convolution kernel (different memory usage)</ol>
  * </ul>
  *
- * TODO:
- * - Histogram from image
- * - Frangi Filter impl. in CUDA
- *
  * @param ptrDevImageGL OpenGL context image (DEVICE)
  * @param ptrCudaImage image read from video (HOST)
  * @param w width of the image
  * @param h heigth of the image
  */
-void launchKernelFillImageKernel ( uchar4* ptrDevImageGL, const uchar4* ptrCudaImage, const uint32_t w, const uint32_t h ) {
+double launchKernelFillImageKernel ( uchar4* ptrDevImageGL, const uchar4* ptrCudaImage, const uint32_t w, const uint32_t h,
+    const KernelKind kind, const GrayscaleMethod grayscale, const dim3 dg, const dim3 db ) {
+  Chronos chrono;
   HANDLE_ERROR( cudaMemcpy( ptrDevCudaRGBImage, ptrCudaImage, sizes.rgb_size, cudaMemcpyHostToDevice ) );
-  dim3 dg = dim3 ( 16, 1, 1 );
-  dim3 db = dim3 ( 32, 1, 1 );
-  kernelRGBImageToBW_Lightness<<< dg, db >>> ( ptrDevCudaRGBImage, w, h, ptrDevCudaBWImage );
-  //HANDLE_ERROR( cudaDeviceSynchronize() );
-  kernelConvolutionTexture<<< dg, db >>> ( w, h, ptrDevKernel, 9, ptrDevImageGL );
-  //kernelDisplayBWImage<<< dg, db >>> ( ptrDevCudaBWImage, w, h, ptrDevImageGL );
-  // TODO: Use switch to launch memory cases
-  ;//
+  chrono.start ();
+  switch ( grayscale ) {
+  default:
+  case AVERAGE:
+    kernelRGBImageToBW_Average<<< dg, db >>> ( ptrDevCudaRGBImage, w, h, ptrDevCudaBWImage );
+    break;
+  case LIGHTNESS:
+    kernelRGBImageToBW_Lightness<<< dg, db >>> ( ptrDevCudaRGBImage, w, h, ptrDevCudaBWImage );
+    break;
+  case LUMINANCE:
+    kernelRGBImageToBW_Luminance<<< dg, db >>> ( ptrDevCudaRGBImage, w, h, ptrDevCudaBWImage );
+    break;
+  }
+  switch ( kind ) {
+  default:
+  case TEXTURE_GLOBAL:
+    kernelConvolutionGlobalImageTexture<<< dg, db >>> ( w, h, ptrDevKernel, 9, ptrDevCudaImageConvolution );
+    break;
+  case TEXTURE_CONSTANT:
+    kernelConvolutionConstantImageTexture<<< dg, db >>> ( w, h, 9, ptrDevCudaImageConvolution );
+    break;
+  case TEXTURE_CONSTANT_MUL24:
+    kernelConvolutionConstantImageTexture_mul24<<< dg, db >>> ( w, h, 9, ptrDevCudaImageConvolution );
+    break;
+  }
+  HANDLE_ERROR( cudaDeviceSynchronize() );
+  double time = chrono.stop ();
+  kernelDisplayConvolution<<< dg, db >>> ( ptrDevCudaImageConvolution, w, h, ptrDevImageGL );
+  ; //
+  return time;
 }

@@ -10,8 +10,8 @@
  |*		Public			*|
  \*-------------------------------------*/
 
-MouseEventImageViewers::MouseEventImageViewers ( ImageMOOs* ptrImageMOO, bool useAnimation )
-    : ImageViewers ( ptrImageMOO, useAnimation ), _heaterMOO ( (HeaterMOO*) ptrImageMOO ) {
+MouseEventImageViewers::MouseEventImageViewers ( ImageMOOs* ptrImageMOO, bool useAnimation, bool useSelection, int pxFrame, int pyFrame )
+    : ImageViewers ( ptrImageMOO, useAnimation, useSelection, pxFrame, pyFrame ), _heaterMOO ( (HeaterMOO*) ptrImageMOO ) {
 }
 
 MouseEventImageViewers::~MouseEventImageViewers () {

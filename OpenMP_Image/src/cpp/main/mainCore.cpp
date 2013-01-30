@@ -159,12 +159,12 @@ bool demoAll(void) {
   RayTracingImageCudaMOO rayTracing ( width, height, 0, 0.005, 20 );
   Mandelbrot mandel ( width, height, DomaineMaths ( -2.1f, -1.3f, 0.8f, 1.3f ), 80 );
   Julia julia ( width, height, DomaineMaths ( -1.3f, -1.4f, 1.3f, 1.4f ), 80, -0.12f, 0.85f );
-  HeaterMOO heater ( width, heigth, 0.1f, 1 );
+  HeaterMOO heater ( width, height, 0.1f, 1 );
 
   ImageViewers imageViewerRippling ( &rippling, true, false, 0, 0 );
-  ImageViewers imageViewerRayTracing ( &rayTracing, true, false, width, 0 );
-  ImageViewers imageViewerMandelbrot ( &mandel, true, false, 0, width );
-  ImageViewers imageViewerJulia ( &julia, true, false, width, width );
+  ImageViewers imageViewerRayTracing ( &rayTracing, true, false, width , 0 );
+  ImageViewers imageViewerMandelbrot ( &mandel, true, true, 0, width + 50 );
+  ImageViewers imageViewerJulia ( &julia, true, true, width, width + 50 );
   MouseEventImageViewers imageViewerHeater ( &heater, true, false, 2*width, 0 );
 
   ImageViewers::runALL ();

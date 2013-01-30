@@ -14,6 +14,7 @@ public:
     delete _capture;
   }
   double transfert ();
+  static double transfert ( const void* ptrMemory, const size_t size );
 private:
   uint32_t _w;
   uint32_t _h;

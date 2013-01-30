@@ -2,10 +2,10 @@
 #include "CaptureVideo.h"
 #include "CaptureVideoDMA.h"
 
-extern double launchKernelMemoryTransfert ( const uint32_t w, const uint32_t h, const void* memory, const size_t memory_size );
+extern double launchKernelMemoryTransfert ( const void* memory, const size_t memory_size );
 
 /**
- * TODO: Correct this mutahfuckah uchar4 to uchar3 ...
+ *
  */
 PinnedVSUnpinned::PinnedVSUnpinned ( const uint32_t w, const uint32_t h, const std::string filename, const HostMemoryType memType )
     : _w ( w ), _h ( h ), _filename ( filename ), _memType ( memType ) {
@@ -24,7 +24,7 @@ PinnedVSUnpinned::PinnedVSUnpinned ( const uint32_t w, const uint32_t h, const s
 }
 
 /**
- * TODO: Again, correct this mutahfuckah uchar4 to uchar3 ...
+ *
  */
 double PinnedVSUnpinned::transfert () {
   cv::Mat img;
@@ -41,6 +41,11 @@ double PinnedVSUnpinned::transfert () {
     ptrMemory = Capture_A::castToUChar3 ( &img );
     break;
   }
-  double time = launchKernelMemoryTransfert ( _w, _h, ptrMemory, _memSize );
+  size_t size = _w * _h * _memSize;
+  return transfert ( ptrMemory, size );
+}
+
+double PinnedVSUnpinned::transfert ( const void* ptrMemory, const size_t size ) {
+  double time = launchKernelMemoryTransfert ( ptrMemory, size );
   return time;
 }
